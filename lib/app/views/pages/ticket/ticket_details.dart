@@ -4,8 +4,6 @@ import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
 
-import '../../elements/train_circle.dart';
-
 class TicketDetailPage extends StatefulWidget {
   const TicketDetailPage({Key? key, this.ticket}) : super(key: key);
 
@@ -157,6 +155,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                 BoxRectangle(
                   title: "Train info",
                   height: 125,
+                  color: Colors.white,
                   body: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -166,7 +165,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         children: [
                           const Icon(
                             Icons.train_sharp,
-                            size: 40,
+                            size: 25,
                             color: primary,
                           ),
                           const SizedBox(
@@ -186,13 +185,13 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         children: [
                           const Icon(
                             Icons.airline_seat_recline_extra_sharp,
-                            size: 40,
+                            size: 25,
                             color: primary,
                           ),
                           const SizedBox(
                             height: 5,
                           ),
-                          Text("Seat ${widget.ticket!.trainId}",
+                          Text("Seat ${widget.ticket!.seat}",
                               style: const TextStyle(
                                 fontSize: 18,
                               ))
@@ -204,6 +203,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                 BoxRectangle(
                   title: "Save for control",
                   height: 125,
+                  color: Colors.white,
                   body: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -213,7 +213,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         children: const [
                           Icon(
                             Icons.print,
-                            size: 40,
+                            size: 25,
                             color: primary,
                           ),
                           SizedBox(
@@ -233,13 +233,13 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         children: const [
                           Icon(
                             Icons.share,
-                            size: 40,
+                            size: 25,
                             color: primary,
                           ),
                           SizedBox(
                             height: 5,
                           ),
-                          Text("Share to friends",
+                          Text("Share",
                               style: TextStyle(
                                 fontSize: 18,
                               ))

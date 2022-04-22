@@ -19,7 +19,7 @@ class _TicketPageState extends State<TicketPage> {
       date: "Jan 15, 2022",
       departureTime: "10:45",
       aririvalTime: "03:00",
-      trainId: "1034304",
+      trainId: "103",
       seat: 200,
       tripId: "23423",
       price: 100);

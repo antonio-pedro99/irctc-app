@@ -4,8 +4,12 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/models/passenger.dart';
+import 'package:irctc_dbms/app/models/search_query.dart';
+import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/profile.dart';
+import 'package:irctc_dbms/app/views/pages/search/search_result.dart';
 import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
 
 class MyApp extends StatelessWidget {
@@ -58,7 +62,22 @@ class _MyHomeState extends State<MyHome> {
             _actualPos = value;
           },
           controller: _pageController,
-          children: const [HomePage(), TicketPage(), ProfilePage()],
+          children: [
+            SearchResultPage(
+              query: Query(
+                  to: "Gurugram",
+                  from: "New Delhi",
+                  departure: "Jan 15, 2022",
+                  passengers: [
+                    Passenger(),
+                    Passenger(),
+                    Passenger(),
+                    Passenger()
+                  ]),
+            ),
+            TicketPage(),
+            ProfilePage()
+          ],
         ),
         bottomNavigationBar: BubbleBottomBar(
           opacity: .2,

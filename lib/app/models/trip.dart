@@ -6,8 +6,11 @@ class Trip {
   int? price;
   String? date;
   String? departureTime;
-  String? aririvalTime;
+  String? arrivalTime;
   String? tripId;
+  String? fromCode;
+  String? duration;
+  String? toCode;
   String? trainId;
   int? stationId;
   String? stationLocation;
@@ -20,11 +23,14 @@ class Trip {
       this.price,
       this.date,
       this.departureTime,
-      this.aririvalTime,
+      this.arrivalTime,
       this.tripId,
       this.trainId,
       this.stationId,
       this.stationLocation,
+      this.fromCode,
+      this.duration,
+      this.toCode,
       this.passengers,
       this.stops});
 
@@ -34,11 +40,14 @@ class Trip {
     price = json['price'];
     date = json['date'];
     departureTime = json['departure_time'];
-    aririvalTime = json['aririval_time'];
+    arrivalTime = json['arrival_time'];
     tripId = json['trip_id'];
     trainId = json['train_id'];
+    duration = json['duration'];
     stationId = json['station_id'];
     stationLocation = json['station_location'];
+    fromCode = json['from_code'];
+    toCode = json['toCode'];
 
     if (json['passengers'] != null) {
       passengers = <Passenger>[];
@@ -60,9 +69,12 @@ class Trip {
     data['from'] = from;
     data['to'] = to;
     data['price'] = price;
+    data['duration'] = duration;
     data['date'] = date;
+    data['fromCode'] = fromCode;
+    data['toCode'] = toCode;
     data['departure_time'] = departureTime;
-    data['aririval_time'] = aririvalTime;
+    data['arrival_time'] = arrivalTime;
     data['trip_id'] = tripId;
     data['train_id'] = trainId;
     data['station_id'] = stationId;

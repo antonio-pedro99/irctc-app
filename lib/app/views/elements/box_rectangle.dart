@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class BoxRectangle extends StatelessWidget {
-  const BoxRectangle({Key? key, this.title, this.body, this.height})
+  const BoxRectangle({Key? key, this.title, this.body, this.height, this.color})
       : super(key: key);
 
   final String? title;
   final double? height;
   final Widget? body;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -21,7 +22,7 @@ class BoxRectangle extends StatelessWidget {
         height: height,
         width: media.width,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(13)),
+            color: color, borderRadius: BorderRadius.circular(13)),
         child: DefaultTextStyle(
             style: const TextStyle(color: grey, fontWeight: FontWeight.w100),
             child: Column(
@@ -29,7 +30,7 @@ class BoxRectangle extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title!,
+                  title == null? "" : title!,
                   style: const TextStyle(fontWeight: FontWeight.w400),
                 ),
                 const SizedBox(
