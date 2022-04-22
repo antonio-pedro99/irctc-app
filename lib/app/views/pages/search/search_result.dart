@@ -23,11 +23,44 @@ class _SearchResultPageState extends State<SearchResultPage> {
     fromCode: "DLX",
     to: "Gugugram",
     toCode: "GGM",
+    stationLocation: "Govind Puri Train Station",
     departureTime: "00:30",
     arrivalTime: "2:00 AM",
     price: 200,
+    trainId: 234,
     duration: "01h20m",
-    stops: [],
+    stops: [
+      /*  Trip(
+        from: "Mumbai",
+        fromCode: "MBI",
+        to: "Gugugram",
+        toCode: "GGM",
+        stationLocation: "Mumbai Train Station",
+        departureTime: "01:30",
+        arrivalTime: "2:00 AM",
+        price: 100,
+        trainId: 404,
+        duration: "00h30m",
+        stops: [],
+        passengers: [],
+        date: "Jan 15, 2022",
+      ), */
+      /*  Trip(
+        from: "Mumbai",
+        fromCode: "MBI",
+        to: "Gugugram",
+        toCode: "GGM",
+        stationLocation: "Mumbai Train Station",
+        departureTime: "01:30",
+        arrivalTime: "2:00 AM",
+        price: 100,
+        trainId: 404,
+        duration: "00h30m",
+        stops: [],
+        passengers: [],
+        date: "Jan 15, 2022",
+      ) */
+    ],
     passengers: [],
     date: "Jan 15, 2022",
   );
@@ -118,8 +151,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
               return const FilterSortPage();
             }));
           },

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
-
+import 'package:irctc_dbms/app/models/search_query.dart';
 import 'package:irctc_dbms/app/models/trip.dart';
-import 'package:irctc_dbms/app/views/elements/trip_tile.dart';
+import 'package:irctc_dbms/app/views/elements/stop_trip_tile.dart';
+import 'package:irctc_dbms/app/views/elements/train_circle.dart';
 
 class TripDetail extends StatefulWidget {
   const TripDetail({Key? key, this.trip}) : super(key: key);
@@ -101,10 +102,139 @@ class _TripDetailState extends State<TripDetail> {
                   ),
                 )),
             Expanded(
-                child: ListView(
-              padding: const EdgeInsets.all(12),
-              children: [],
-            ))
+                child: DefaultTextStyle(
+                    style: const TextStyle(fontSize: 16, color: primary),
+                    child: ListView(
+                      padding: const EdgeInsets.all(12),
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height / 5,
+                                  width: 1,
+                                  color: swatch,
+                                ),
+                                const Positioned(
+                                    child: TrainCircle(
+                                  iconColor: Colors.white,
+                                  background: swatch,
+                                  radius: 15,
+                                )),
+                              ],
+                            ),
+                            const SizedBox(width: 15),
+                            Expanded(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "${widget.trip!.fromCode} - ${widget.trip!.from}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20,
+                                        color: primary)),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "${widget.trip!.departureTime} AM",
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  "Train ${widget.trip!.trainId}",
+                                ),
+                                const SizedBox(height: 5),
+                                Text("${widget.trip!.stationLocation}",
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        color: primary,
+                                        fontWeight: FontWeight.w600)),
+                                const SizedBox(height: 5),
+                                Text(
+                                  "${widget.trip!.duration}",
+                                )
+                              ],
+                            ))
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        widget.trip!.stops!.isNotEmpty
+                            ? SizedBox(
+                                height: MediaQuery.of(context).size.height,
+                                child: ListView.builder(
+                                    itemCount: widget.trip!.stops!.length,
+                                    itemBuilder: (context, index) {
+                                      return StopTripTile(
+                                        trip: widget.trip!.stops![index],
+                                      );
+                                    }),
+                              )
+                            : const Divider(
+                                height: 3,
+                              ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height / 5,
+                                  width: 1,
+                                  color: swatch,
+                                ),
+                                const Positioned(
+                                    child: TrainCircle(
+                                  iconColor: Colors.white,
+                                  background: swatch,
+                                  radius: 15,
+                                )),
+                              ],
+                            ),
+                            const SizedBox(width: 15),
+                            Expanded(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 40,
+                                ),
+                                Text(
+                                  "${widget.trip!.arrivalTime} AM",
+                                ),
+                                const SizedBox(height: 5),
+                                const SizedBox(height: 5),
+                                Text("${widget.trip!.stationLocation}",
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        color: primary,
+                                        fontWeight: FontWeight.w600)),
+                                const SizedBox(height: 10),
+                                Text(
+                                    "${widget.trip!.toCode} - ${widget.trip!.to}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20,
+                                        color: primary)),
+                              ],
+                            ))
+                          ],
+                        ),
+                      ],
+                    )))
           ],
         ));
   }

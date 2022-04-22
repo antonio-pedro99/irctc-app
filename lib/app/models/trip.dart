@@ -11,7 +11,7 @@ class Trip {
   String? fromCode;
   String? duration;
   String? toCode;
-  String? trainId;
+  int? trainId;
   int? stationId;
   String? stationLocation;
   List<Passenger>? passengers;
