@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
 
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -13,7 +12,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -45,11 +43,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            
-                          ],
+                          children: const [],
                         ),
-                        
                       ],
                     ),
                   ),
@@ -61,20 +56,15 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.normal,
                         fontSize: 20),
                   ),
-                
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      
-                    ],
+                    children: const [],
                   ),
                   const SizedBox(height: 10),
                   Expanded(
-                      // ignore: sized_box_for_whitespace
-                      child: Container(
-                    height: 500,
-                    child: Container()),
+                    // ignore: sized_box_for_whitespace
+                    child: Container(height: 500, child: Container()),
                   )
                 ]))
               ],
