@@ -62,10 +62,6 @@ class _HomePageState extends State<HomePage> {
                     children: const [],
                   ),
                   const SizedBox(height: 10),
-                  Expanded(
-                    // ignore: sized_box_for_whitespace
-                    child: Container(height: 500, child: Container()),
-                  )
                 ]))
               ],
             )));
