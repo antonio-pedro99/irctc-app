@@ -42,9 +42,7 @@ class _TicketPageState extends State<TicketPage> {
             actions: []),
         body: SafeArea(
             minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: ListView(
               children: [
                 GestureDetector(
                   child: TicketTile(
@@ -58,7 +56,73 @@ class _TicketPageState extends State<TicketPage> {
                       );
                     }));
                   },
-                )
+                ),
+                TicketTile(
+                    ticket: Ticket(
+                        from: "NEW DELHI",
+                        to: "GOA",
+                        date: "Jan 15, 2022",
+                        departureTime: "10:45",
+                        aririvalTime: "03:00",
+                        trainId: "103",
+                        seat: 200,
+                        tripId: "23423",
+                        price: 100)),
+                TicketTile(
+                    ticket: Ticket(
+                        from: "NEW DELHI",
+                        to: "GOA",
+                        date: "Jan 15, 2022",
+                        departureTime: "10:45",
+                        aririvalTime: "03:00",
+                        trainId: "103",
+                        seat: 200,
+                        tripId: "23423",
+                        price: 100)),
+                TicketTile(
+                    ticket: Ticket(
+                        from: "NEW DELHI",
+                        to: "GOA",
+                        date: "Jan 15, 2022",
+                        departureTime: "10:45",
+                        aririvalTime: "03:00",
+                        trainId: "103",
+                        seat: 200,
+                        tripId: "23423",
+                        price: 100)),
+                TicketTile(
+                    ticket: Ticket(
+                        from: "NEW DELHI",
+                        to: "GOA",
+                        date: "Jan 15, 2022",
+                        departureTime: "10:45",
+                        aririvalTime: "03:00",
+                        trainId: "103",
+                        seat: 200,
+                        tripId: "23423",
+                        price: 100)),
+                TicketTile(
+                    ticket: Ticket(
+                        from: "NEW DELHI",
+                        to: "GOA",
+                        date: "Jan 15, 2022",
+                        departureTime: "10:45",
+                        aririvalTime: "03:00",
+                        trainId: "103",
+                        seat: 200,
+                        tripId: "23423",
+                        price: 100)),
+                TicketTile(
+                    ticket: Ticket(
+                        from: "NEW DELHI",
+                        to: "GOA",
+                        date: "Jan 15, 2022",
+                        departureTime: "10:45",
+                        aririvalTime: "03:00",
+                        trainId: "103",
+                        seat: 200,
+                        tripId: "23423",
+                        price: 100)),
               ],
             )));
   }

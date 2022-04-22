@@ -62,8 +62,8 @@ class _MyHomeState extends State<MyHome> {
             _actualPos = value;
           },
           controller: _pageController,
-          children: [
-            SearchResultPage(
+          children: const [
+            /* SearchResultPage(
               query: Query(
                   to: "Gurugram",
                   from: "New Delhi",
@@ -74,7 +74,8 @@ class _MyHomeState extends State<MyHome> {
                     Passenger(),
                     Passenger()
                   ]),
-            ),
+            ), */
+            HomePage(),
             TicketPage(),
             ProfilePage()
           ],

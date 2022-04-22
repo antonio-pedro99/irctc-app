@@ -236,6 +236,10 @@ class _TripDetailState extends State<TripDetail> {
                       ],
                     )))
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.done_sharp),
         ));
   }
 }
