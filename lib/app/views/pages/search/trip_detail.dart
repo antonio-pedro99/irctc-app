@@ -1,36 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
-import 'package:irctc_dbms/app/models/search_query.dart';
+
 import 'package:irctc_dbms/app/models/trip.dart';
 import 'package:irctc_dbms/app/views/elements/trip_tile.dart';
-import 'package:irctc_dbms/app/views/pages/search/filter_page.dart';
-import 'package:irctc_dbms/app/views/pages/search/trip_detail.dart';
 
-bool filterApplied = false;
+class TripDetail extends StatefulWidget {
+  const TripDetail({Key? key, this.trip}) : super(key: key);
 
-class SearchResultPage extends StatefulWidget {
-  const SearchResultPage({Key? key, this.query}) : super(key: key);
-
-  final Query? query;
+  final Trip? trip;
   @override
-  State<SearchResultPage> createState() => _SearchResultPageState();
+  State<TripDetail> createState() => _TripDetailState();
 }
 
-class _SearchResultPageState extends State<SearchResultPage> {
-  final _trip = Trip(
-    from: "New Delhi",
-    fromCode: "DLX",
-    to: "Gugugram",
-    toCode: "GGM",
-    departureTime: "00:30",
-    arrivalTime: "2:00 AM",
-    price: 200,
-    duration: "01h20m",
-    stops: [],
-    passengers: [],
-    date: "Jan 15, 2022",
-  );
+class _TripDetailState extends State<TripDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,15 +66,35 @@ class _SearchResultPageState extends State<SearchResultPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Text(
-                          "Selecting Trip to\n${widget.query!.to}",
-                          style: const TextStyle(fontSize: 24),
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "${widget.query!.departure}, ${widget.query!.passengers!.length} Travellers",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "Selecting Trip to\n${widget.trip!.to}",
+                                  style: const TextStyle(fontSize: 24),
+                                ),
+                                const SizedBox(
+                                  height: 25,
+                                ),
+                                Text(
+                                  "${widget.trip!.date}, 4 Travellers",
+                                )
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Text(
+                                  "Total",
+                                ),
+                                Text("Rs ${widget.trip!.price}",
+                                    style: const TextStyle(fontSize: 24))
+                              ],
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -100,32 +103,9 @@ class _SearchResultPageState extends State<SearchResultPage> {
             Expanded(
                 child: ListView(
               padding: const EdgeInsets.all(12),
-              children: [
-                InkWell(
-                  child: TripTile(
-                    trip: _trip,
-                  ),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return TripDetail(trip: _trip);
-                    }));
-                  },
-                )
-              ],
+              children: [],
             ))
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) {
-              return const FilterSortPage();
-            }));
-          },
-          child: const Icon(
-            Icons.filter_list,
-          ),
         ));
   }
 }
