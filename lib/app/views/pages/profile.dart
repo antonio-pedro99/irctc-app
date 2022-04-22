@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       slivers: [
         const SliverAppBar(
           backgroundColor: primary,
-          title: Text("Search Trip",
+          title: Text("Profile",
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 fontSize: 20,
@@ -26,9 +26,9 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           elevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.dark,
+              statusBarIconBrightness: Brightness.light,
               statusBarBrightness: Brightness.light,
-              statusBarColor: primary30),
+              statusBarColor: primary),
           actions: [],
         ),
         SliverList(

@@ -38,6 +38,7 @@ dependencies:
   scoped_model: ^1.1.0
   path_provider: ^2.0.9
   provider: ^6.0.2
+  bubble_bottom_bar: ^2.0.0
 
 dev_dependencies:
   flutter_test:
