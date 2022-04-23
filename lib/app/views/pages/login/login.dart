@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/app.dart';
 import 'package:irctc_dbms/app/constants.dart';
-import 'package:irctc_dbms/app/views/pages/home.dart';
+import 'package:irctc_dbms/app/views/pages/login/register.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -22,7 +22,8 @@ class LoginPage extends StatelessWidget {
                   statusBarColor: Colors.white),
             ),
             SliverPadding(
-                padding: const EdgeInsets.all(12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 sliver: SliverList(
                     delegate: SliverChildListDelegate([
                   const Text("Login",
@@ -37,7 +38,7 @@ class LoginPage extends StatelessWidget {
                     fit: BoxFit.fitWidth,
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   TextFormField(
                     validator: (str) {
@@ -80,7 +81,7 @@ class LoginPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(13))),
                   ),
                   const SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
                   TextButton(
                       style: ButtonStyle(
@@ -102,7 +103,25 @@ class LoginPage extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 16)))
+                              fontSize: 16))),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return const RegisterPage();
+                      }));
+                    },
+                    child: const Text(
+                      "Don't have an account yet?",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: primary),
+                    ),
+                  )
                 ])))
           ],
         ));

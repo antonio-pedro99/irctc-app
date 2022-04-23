@@ -88,7 +88,10 @@ class OTP1 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text("or"),
+                      const Text(
+                        "or",
+                        style: TextStyle(color: Colors.white54, fontSize: 16),
+                      ),
                       const SizedBox(
                         width: 10,
                       ),

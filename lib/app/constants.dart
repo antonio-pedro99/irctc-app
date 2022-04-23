@@ -24,6 +24,7 @@ MaterialColor getMaterialColor(Color color) {
 const Color greyBackground = Color.fromRGBO(239, 239, 240, 1);
 const Color grey = Color.fromRGBO(132, 119, 116, 1);
 const Color grey1 = Color.fromRGBO(235, 235, 235, 1);
+const Color grey3 = Color.fromRGBO(206, 206, 206, 1);
 const Color grey2 = Color.fromRGBO(167, 49, 45, 1);
 const Color swatch = Color.fromRGBO(238, 123, 103, 1);
 const Color primary = Color.fromRGBO(248, 153, 135, 1);
