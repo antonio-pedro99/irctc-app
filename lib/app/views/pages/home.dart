@@ -1,9 +1,12 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
+import 'package:irctc_dbms/app/views/elements/selecter.dart';
 import 'package:irctc_dbms/app/views/elements/ticket_tile.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -71,6 +74,42 @@ class _HomePageState extends State<HomePage>
         ),
       ),
     );
+  }
+
+  selectTravellers(BuildContext context) {
+    setState(() {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: ListView(
+                  children: const [
+                    SelectTraveller(
+                      ageRange: "15 - ahead",
+                      title: "Adults",
+                      selected: 0,
+                    ),
+                    SelectTraveller(
+                      ageRange: "5 - 14 ",
+                      title: "Children",
+                      selected: 0,
+                    ),
+                    SelectTraveller(
+                      ageRange: "0 - 4",
+                      title: "Minor",
+                      selected: 0,
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(onPressed: () {}, child: const Text("Done"))
+              ],
+            );
+          });
+    });
   }
 
   @override
@@ -195,17 +234,7 @@ class _HomePageState extends State<HomePage>
                                 departureController,
                                 travellersController,
                                 () {
-                                  setState(() {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: ListView(
-                                              children: [ListTile()],
-                                            ),
-                                          );
-                                        });
-                                  });
+                                  selectTravellers(context);
                                 }),
                             round_trip(
                                 keyRoundTrip,
@@ -233,17 +262,7 @@ class _HomePageState extends State<HomePage>
                                 travellersController,
                                 returnController,
                                 () {
-                                  setState(() {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            content: ListView(
-                                              children: [ListTile()],
-                                            ),
-                                          );
-                                        });
-                                  });
+                                  selectTravellers(context);
                                 })
                           ],
                           controller: tabController,
