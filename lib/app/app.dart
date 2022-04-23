@@ -2,21 +2,23 @@ import 'dart:math';
 
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/passenger.dart';
 import 'package:irctc_dbms/app/models/search_query.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/profile.dart';
-import 'package:irctc_dbms/app/views/pages/search/search_result.dart';
+
 import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'IRCTC',

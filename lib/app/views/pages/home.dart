@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/controllers/traveller_selecter_controller.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
 import 'package:irctc_dbms/app/views/elements/selecter.dart';
 import 'package:irctc_dbms/app/views/elements/ticket_tile.dart';
+import 'package:provider/provider.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,6 +32,11 @@ class _HomePageState extends State<HomePage>
   TextEditingController travellersController = TextEditingController();
   TextEditingController returnController = TextEditingController();
 
+  SelecterTravellerController adultController = SelecterTravellerController();
+  SelecterTravellerController childrenController =
+      SelecterTravellerController();
+  SelecterTravellerController minorController = SelecterTravellerController();
+
   List<Tab> tabs = const [
     Tab(
       text: "One route",
@@ -47,6 +54,7 @@ class _HomePageState extends State<HomePage>
             .format(DateTime.now());
     returnController.text = DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
         .format(DateTime(DateTime.tuesday));
+
     super.initState();
   }
 
@@ -85,27 +93,45 @@ class _HomePageState extends State<HomePage>
               content: Container(
                 height: MediaQuery.of(context).size.height / 3,
                 child: ListView(
-                  children: const [
-                    SelectTraveller(
-                      ageRange: "15 - ahead",
-                      title: "Adults",
-                      selected: 0,
+                  children: [
+                    ChangeNotifierProvider(
+                      create: (_) => SelecterTravellerController(),
+                      child: SelectTraveller(
+                        ageRange: "15 - ahead",
+                        title: "Adults",
+                        controller: adultController,
+                      ),
                     ),
-                    SelectTraveller(
-                      ageRange: "5 - 14 ",
-                      title: "Children",
-                      selected: 0,
-                    ),
-                    SelectTraveller(
-                      ageRange: "0 - 4",
-                      title: "Minor",
-                      selected: 0,
-                    ),
+                    ChangeNotifierProvider(
+                        create: (_) => SelecterTravellerController(),
+                        child: SelectTraveller(
+                          ageRange: "5 - 14 ",
+                          title: "Children",
+                          controller: childrenController,
+                        )),
+                    ChangeNotifierProvider(
+                        create: (_) => SelecterTravellerController(),
+                        child: SelectTraveller(
+                          ageRange: "0 - 4",
+                          title: "Minor",
+                          controller: minorController,
+                        )),
                   ],
                 ),
               ),
               actions: [
-                TextButton(onPressed: () {}, child: const Text("Done"))
+                TextButton(
+                    onPressed: () {
+                      setState(() {
+                        travellersController.text = adultController.text +
+                            " adults, " +
+                            childrenController.text +
+                            " children, " +
+                            minorController.text +
+                            " minors.";
+                      });
+                    },
+                    child: const Text("Done"))
               ],
             );
           });
