@@ -5,6 +5,7 @@ import 'package:irctc_dbms/app/models/search_query.dart';
 import 'package:irctc_dbms/app/models/trip.dart';
 import 'package:irctc_dbms/app/views/elements/stop_trip_tile.dart';
 import 'package:irctc_dbms/app/views/elements/train_circle.dart';
+import 'package:irctc_dbms/app/views/pages/payment.dart';
 
 class TripDetail extends StatefulWidget {
   const TripDetail({Key? key, this.trip, this.query}) : super(key: key);
@@ -239,7 +240,13 @@ class _TripDetailState extends State<TripDetail> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return PaymentPage(
+                trip: widget.trip,
+              );
+            }));
+          },
           child: const Icon(Icons.done_sharp),
         ));
   }
