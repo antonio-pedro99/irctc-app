@@ -39,6 +39,8 @@ dependencies:
   path_provider: ^2.0.9
   provider: ^6.0.2
   bubble_bottom_bar: ^2.0.0
+  tab_indicator_styler: ^2.0.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
