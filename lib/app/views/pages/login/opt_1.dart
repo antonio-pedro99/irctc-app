@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/views/pages/login/login.dart';
 
 class OTP1 extends StatelessWidget {
   const OTP1({Key? key}) : super(key: key);
@@ -92,7 +93,12 @@ class OTP1 extends StatelessWidget {
                         width: 10,
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return const LoginPage();
+                          }));
+                        },
                         child: const Text(
                           "Login with Email and Password",
                           style: TextStyle(

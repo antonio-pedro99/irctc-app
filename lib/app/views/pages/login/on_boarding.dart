@@ -32,7 +32,7 @@ class OnBoardingPage extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text("Online Train Booking\n APP",
+                  const Text("Online Train Booking\n App",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white,

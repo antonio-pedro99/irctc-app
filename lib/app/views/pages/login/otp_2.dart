@@ -53,7 +53,7 @@ class OTP2 extends StatelessWidget {
                           backgroundColor: MaterialStateProperty.resolveWith(
                               (states) => Colors.white)),
                       onPressed: () {},
-                      child: const Text("Get OTP",
+                      child: const Text("Submit",
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               color: primary,
