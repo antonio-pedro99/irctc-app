@@ -7,7 +7,8 @@ class RoundedButton extends StatelessWidget {
       this.labelColor = Colors.black54,
       required this.onPress,
       this.height = 52,
-      this.width = 227})
+      this.color,
+      this.width})
       : super(key: key);
 
   final double? height;
@@ -15,6 +16,7 @@ class RoundedButton extends StatelessWidget {
   final Color labelColor;
   final String label;
   final VoidCallback onPress;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +25,9 @@ class RoundedButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         height: height,
-        width: width,
+        width: width ?? 227,
         decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+            color: color ?? Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(50)),
         child: Text(
           label,

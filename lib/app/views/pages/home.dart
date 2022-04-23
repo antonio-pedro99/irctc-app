@@ -1,15 +1,21 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/controllers/traveller_selecter_controller.dart';
+import 'package:irctc_dbms/app/models/scoped/user.dart';
+import 'package:irctc_dbms/app/models/search_query.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
 import 'package:irctc_dbms/app/views/elements/selecter.dart';
 import 'package:irctc_dbms/app/views/elements/ticket_tile.dart';
+import 'package:irctc_dbms/app/views/pages/search/search_result.dart';
 import 'package:provider/provider.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class HomePage extends StatefulWidget {
@@ -138,172 +144,211 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  void openDatePicker(BuildContext context) {
+    setState(() {
+      showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime(2030))
+          .then((value) {
+        setState(() {
+          departureController.text =
+              DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY).format(value!);
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          backgroundColor: Colors.white,
-          title: const Text("Search Trips",
-              style: TextStyle(
-                  fontWeight: FontWeight.normal, fontSize: 20, color: grey)),
-          floating: true,
-          elevation: 0,
-          centerTitle: true,
-          expandedHeight: 175,
-          flexibleSpace: kToolbarHeight >= 200
-              ? Container()
-              : Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 55, 0, 0),
-                  child: ListView(
-                    children: const [
-                      Text("Welcome back!",
-                          textAlign: TextAlign.start,
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                              color: grey)),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text("Where we will\ngo today?",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                              color: swatch))
-                    ],
-                  ),
-                ),
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.dark,
-              statusBarBrightness: Brightness.light,
-              statusBarColor: Colors.white),
-        ),
-        SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            sliver: SliverList(
-                delegate: SliverChildListDelegate([
-              const SizedBox(height: 10),
-              const Text("Your recent Trip",
-                  style: TextStyle(
-                      fontSize: 14, color: grey, fontWeight: FontWeight.w600)),
-              const SizedBox(height: 5),
-              TicketTile(
-                ticket: Ticket(
-                    from: "NEW DELHI",
-                    to: "GOA",
-                    date: "Jan 15, 2022",
-                    departureTime: "10:45",
-                    aririvalTime: "03:00",
-                    trainId: "103",
-                    seat: 200,
-                    tripId: "23423",
-                    price: 100),
-              ),
-              const SizedBox(height: 5),
-              const Text("Your next trip details",
-                  style: TextStyle(
-                      fontSize: 14, color: grey, fontWeight: FontWeight.w600)),
-              const SizedBox(height: 5),
-              customContainer(
-                  context,
-                  DefaultTabController(
-                    length: 2,
-                    child: Column(
-                      children: [
-                        TabBar(
-                            controller: tabController,
-                            labelColor: swatch,
-                            unselectedLabelColor: grey,
-                            labelStyle: const TextStyle(fontSize: 16),
-                            indicatorColor: swatch,
-                            indicator: MaterialIndicator(
-                              height: 2,
-                              strokeWidth: 10,
-                              topLeftRadius: 8,
-                              topRightRadius: 8,
-                              bottomLeftRadius: 8,
-                              bottomRightRadius: 8,
-                              horizontalPadding: 50,
-                              color: swatch,
-                            ),
-                            tabs: tabs),
-                        Expanded(
-                            child: TabBarView(
-                          children: [
-                            one_route(
-                                keyOneRoute,
-                                () {},
-                                () {
-                                  setState(() {
-                                    showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime.now(),
-                                            lastDate: DateTime(2030))
-                                        .then((value) {
-                                      setState(() {
-                                        departureController
-                                            .text = DateFormat(DateFormat
-                                                .YEAR_ABBR_MONTH_WEEKDAY_DAY)
-                                            .format(value!);
-                                      });
-                                    });
-                                  });
-                                },
-                                fromController,
-                                toController,
-                                departureController,
-                                travellersController,
-                                () {
-                                  selectTravellers(context);
-                                }),
-                            round_trip(
-                                keyRoundTrip,
-                                () {},
-                                () {
-                                  setState(() {
-                                    showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime.now(),
-                                            lastDate: DateTime(2030))
-                                        .then((value) {
-                                      setState(() {
-                                        departureController
-                                            .text = DateFormat(DateFormat
-                                                .YEAR_ABBR_MONTH_WEEKDAY_DAY)
-                                            .format(value!);
-                                      });
-                                    });
-                                  });
-                                },
-                                fromController,
-                                toController,
-                                departureController,
-                                travellersController,
-                                returnController,
-                                () {
-                                  selectTravellers(context);
-                                })
-                          ],
-                          controller: tabController,
-                        ))
+    late Query searchQuery;
+
+    return ScopedModelDescendant<UserModel>(builder: ((context, child, model) {
+      return Scaffold(
+          body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.white,
+            title: const Text("Search Trips",
+                style: TextStyle(
+                    fontWeight: FontWeight.normal, fontSize: 20, color: grey)),
+            floating: true,
+            elevation: 0,
+            centerTitle: true,
+            expandedHeight: 175,
+            flexibleSpace: kToolbarHeight >= 200
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 55, 0, 0),
+                    child: ListView(
+                      children: const [
+                        Text("Welcome back!",
+                            textAlign: TextAlign.start,
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                                color: grey)),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text("Where we will\ngo today?",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
+                                color: swatch))
                       ],
                     ),
                   ),
-                  MediaQuery.of(context).size.height / 1.6)
-            ])))
-      ],
-    ));
+            systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.dark,
+                statusBarBrightness: Brightness.light,
+                statusBarColor: Colors.white),
+          ),
+          SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                const SizedBox(height: 10),
+                const Text("Your recent Trip",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: grey,
+                        fontWeight: FontWeight.w600)),
+                const SizedBox(height: 5),
+                TicketTile(
+                  ticket: Ticket(
+                      from: "NEW DELHI",
+                      to: "GOA",
+                      date: "Jan 15, 2022",
+                      departureTime: "10:45",
+                      aririvalTime: "03:00",
+                      trainId: "103",
+                      seat: 200,
+                      tripId: "23423",
+                      price: 100),
+                ),
+                const SizedBox(height: 5),
+                const Text("Your next trip details",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: grey,
+                        fontWeight: FontWeight.w600)),
+                const SizedBox(height: 5),
+                customContainer(
+                    context,
+                    DefaultTabController(
+                      length: 2,
+                      child: Column(
+                        children: [
+                          TabBar(
+                              controller: tabController,
+                              labelColor: swatch,
+                              unselectedLabelColor: grey,
+                              labelStyle: const TextStyle(fontSize: 16),
+                              indicatorColor: swatch,
+                              indicator: MaterialIndicator(
+                                height: 2,
+                                strokeWidth: 10,
+                                topLeftRadius: 8,
+                                topRightRadius: 8,
+                                bottomLeftRadius: 8,
+                                bottomRightRadius: 8,
+                                horizontalPadding: 50,
+                                color: swatch,
+                              ),
+                              tabs: tabs),
+                          Expanded(
+                              child: TabBarView(
+                            children: [
+                              oneRouteTrip(
+                                  keyOneRoute,
+                                  () {
+                                    searchQuery = Query(
+                                        from: fromController.text,
+                                        to: toController.text,
+                                        departure: departureController.text,
+                                        returnDate: returnController.text,
+                                        totalPassengers: int.parse(
+                                                adultController.text
+                                                    .toString()) +
+                                            int.parse(childrenController.text) +
+                                            int.parse(minorController.text),
+                                        passengers: {
+                                          "adults": int.parse(
+                                              adultController.text.toString()),
+                                          "children": int.parse(
+                                              childrenController.text),
+                                          "minors":
+                                              int.parse(minorController.text),
+                                        });
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return SearchResultPage(
+                                          query: searchQuery);
+                                    }));
+                                  },
+                                  () {
+                                    openDatePicker(context);
+                                  },
+                                  fromController,
+                                  toController,
+                                  departureController,
+                                  travellersController,
+                                  () {
+                                    selectTravellers(context);
+                                  }),
+                              roundTrip(
+                                  keyRoundTrip,
+                                  () {
+                                    searchQuery = Query(
+                                        from: fromController.text,
+                                        to: toController.text,
+                                        departure: departureController.text,
+                                        returnDate: returnController.text,
+                                        passengers: {
+                                          "adults": int.parse(
+                                              adultController.text.toString()),
+                                          "children": int.parse(
+                                              childrenController.text),
+                                          "minors":
+                                              int.parse(minorController.text)
+                                        });
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(builder: (context) {
+                                      return SearchResultPage(
+                                          query: searchQuery);
+                                    }));
+                                  },
+                                  () {
+                                    openDatePicker(context);
+                                  },
+                                  fromController,
+                                  toController,
+                                  departureController,
+                                  travellersController,
+                                  returnController,
+                                  () {
+                                    selectTravellers(context);
+                                  })
+                            ],
+                            controller: tabController,
+                          ))
+                        ],
+                      ),
+                    ),
+                    MediaQuery.of(context).size.height / 1.6)
+              ])))
+        ],
+      ));
+    }));
   }
 }
 
-Widget one_route(
+Widget oneRouteTrip(
     GlobalKey<FormState> formKey,
     VoidCallback onClickSearch,
     VoidCallback onDateClick,
@@ -322,7 +367,6 @@ Widget one_route(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "From",
@@ -341,7 +385,6 @@ Widget one_route(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "To",
@@ -360,7 +403,6 @@ Widget one_route(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "Departure",
@@ -379,7 +421,6 @@ Widget one_route(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "Travellers",
@@ -394,16 +435,12 @@ Widget one_route(
           RoundedButton(
               label: "Search",
               labelColor: Colors.white,
-              onPress: () {
-                if (formKey.currentState!.validate()) {
-                  onClickSearch;
-                }
-              }),
+              onPress: onClickSearch),
         ],
       ));
 }
 
-Widget round_trip(
+Widget roundTrip(
     GlobalKey<FormState> formKey,
     VoidCallback onClickSearch,
     VoidCallback onDateClick,
@@ -423,7 +460,6 @@ Widget round_trip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "From",
@@ -442,7 +478,6 @@ Widget round_trip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "To",
@@ -461,7 +496,6 @@ Widget round_trip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "Departure",
@@ -480,7 +514,6 @@ Widget round_trip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "Return",
@@ -499,7 +532,6 @@ Widget round_trip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
-              return "";
             },
             decoration: InputDecoration(
                 hintText: "Travellers",
@@ -514,11 +546,7 @@ Widget round_trip(
           RoundedButton(
               label: "Search",
               labelColor: Colors.white,
-              onPress: () {
-                if (formKey.currentState!.validate()) {
-                  onClickSearch;
-                }
-              }),
+              onPress: onClickSearch),
         ],
       ));
 }

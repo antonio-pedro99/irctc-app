@@ -7,9 +7,10 @@ import 'package:irctc_dbms/app/views/elements/stop_trip_tile.dart';
 import 'package:irctc_dbms/app/views/elements/train_circle.dart';
 
 class TripDetail extends StatefulWidget {
-  const TripDetail({Key? key, this.trip}) : super(key: key);
+  const TripDetail({Key? key, this.trip, this.query}) : super(key: key);
 
   final Trip? trip;
+  final Query? query;
   @override
   State<TripDetail> createState() => _TripDetailState();
 }
@@ -73,14 +74,14 @@ class _TripDetailState extends State<TripDetail> {
                             Column(
                               children: [
                                 Text(
-                                  "Selecting Trip to\n${widget.trip!.to}",
+                                  "Selecting Trip to\n${widget.query!.to}",
                                   style: const TextStyle(fontSize: 24),
                                 ),
                                 const SizedBox(
                                   height: 25,
                                 ),
                                 Text(
-                                  "${widget.trip!.date}, 4 Travellers",
+                                  "${widget.query!.departure}, ${widget.query!.totalPassengers} Travellers",
                                 )
                               ],
                             ),

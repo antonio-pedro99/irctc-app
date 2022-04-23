@@ -1,33 +1,38 @@
-import 'dart:math';
-
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:irctc_dbms/app/constants.dart';
-import 'package:irctc_dbms/app/models/passenger.dart';
-import 'package:irctc_dbms/app/models/search_query.dart';
-import 'package:irctc_dbms/app/models/ticket.dart';
+import 'package:irctc_dbms/app/models/scoped/user.dart';
+
 import 'package:irctc_dbms/app/views/pages/home.dart';
+import 'package:irctc_dbms/app/views/pages/login/on_boarding.dart';
 import 'package:irctc_dbms/app/views/pages/profile.dart';
 
 import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:scoped_model/scoped_model.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'IRCTC',
-      theme: ThemeData(
-          backgroundColor: greyBackground,
-          textTheme: GoogleFonts.latoTextTheme(),
-          primarySwatch: getMaterialColor(swatch)),
-      home: const MyHome(),
-    );
+    return ScopedModel<UserModel>(
+        model: UserModel(),
+        child:
+            ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'IRCTC',
+            theme: ThemeData(
+                backgroundColor: greyBackground,
+                textTheme: GoogleFonts.latoTextTheme(),
+                primarySwatch: getMaterialColor(swatch)),
+            home: const OnBoardingPage(),
+          );
+        }));
   }
 }
 

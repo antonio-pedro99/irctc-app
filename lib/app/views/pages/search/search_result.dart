@@ -124,7 +124,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
                           height: 25,
                         ),
                         Text(
-                          "${widget.query!.departure}, ${widget.query!.passengers!.length} Travellers",
+                          "${widget.query!.departure}, ${widget.query!.totalPassengers} Travellers",
                         ),
                       ],
                     ),
@@ -141,7 +141,10 @@ class _SearchResultPageState extends State<SearchResultPage> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return TripDetail(trip: _trip);
+                      return TripDetail(
+                        trip: _trip,
+                        query: widget.query,
+                      );
                     }));
                   },
                 )
