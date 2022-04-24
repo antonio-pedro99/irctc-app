@@ -18,7 +18,7 @@ class SelectTraveller extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       title: Center(
         child: Text(
-            "${Provider.of<SelecterTravellerController>(context).selected} $title"),
+            "${Provider.of<SelecterTravellerController>(context).text} $title"),
       ),
       subtitle: Center(
         child: Text("($ageRange)"),
@@ -26,13 +26,21 @@ class SelectTraveller extends StatelessWidget {
       leading: IconButton(
           color: primary,
           onPressed: () {
-            controller.decrement();
+            Provider.of<SelecterTravellerController>(context, listen: false)
+                .decrement();
+            controller.text =
+                Provider.of<SelecterTravellerController>(context, listen: false)
+                    .text;
           },
           icon: const Icon(Icons.remove)),
       trailing: IconButton(
           color: primary,
           onPressed: () {
-            controller.increment();
+            Provider.of<SelecterTravellerController>(context, listen: false)
+                .increment();
+            controller.text =
+                Provider.of<SelecterTravellerController>(context, listen: false)
+                    .text;
           },
           icon: const Icon(Icons.add, color: primary)),
     );

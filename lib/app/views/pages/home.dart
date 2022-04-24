@@ -38,7 +38,8 @@ class _HomePageState extends State<HomePage>
   TextEditingController travellersController = TextEditingController();
   TextEditingController returnController = TextEditingController();
 
-  SelecterTravellerController adultController = SelecterTravellerController();
+  SelecterTravellerController adultController =
+      SelecterTravellerController(selected: 1);
   SelecterTravellerController childrenController =
       SelecterTravellerController();
   SelecterTravellerController minorController = SelecterTravellerController();
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage>
             .format(DateTime.now());
     returnController.text = DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
         .format(DateTime(DateTime.tuesday));
-
+    travellersController.text = "1 adult.";
     super.initState();
   }
 
@@ -101,7 +102,8 @@ class _HomePageState extends State<HomePage>
                 child: ListView(
                   children: [
                     ChangeNotifierProvider(
-                      create: (_) => SelecterTravellerController(),
+                      create: (_) => SelecterTravellerController(
+                          selected: adultController.selected),
                       child: SelectTraveller(
                         ageRange: "15 - ahead",
                         title: "Adults",
@@ -109,14 +111,16 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     ChangeNotifierProvider(
-                        create: (_) => SelecterTravellerController(),
+                        create: (_) => SelecterTravellerController(
+                            selected: childrenController.selected),
                         child: SelectTraveller(
                           ageRange: "5 - 14 ",
                           title: "Children",
                           controller: childrenController,
                         )),
                     ChangeNotifierProvider(
-                        create: (_) => SelecterTravellerController(),
+                        create: (_) => SelecterTravellerController(
+                            selected: minorController.selected),
                         child: SelectTraveller(
                           ageRange: "0 - 4",
                           title: "Minor",
@@ -135,6 +139,7 @@ class _HomePageState extends State<HomePage>
                             " children, " +
                             minorController.text +
                             " minors.";
+                        Navigator.of(context).pop();
                       });
                     },
                     child: const Text("Done"))
