@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/models/scoped/query.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 
 import 'package:irctc_dbms/app/views/pages/home.dart';
@@ -23,15 +24,20 @@ class MyApp extends ConsumerWidget {
         model: UserModel(),
         child:
             ScopedModelDescendant<UserModel>(builder: (context, child, model) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'IRCTC',
-            theme: ThemeData(
-                backgroundColor: greyBackground,
-                textTheme: GoogleFonts.latoTextTheme(),
-                primarySwatch: getMaterialColor(swatch)),
-            home: const OnBoardingPage(),
-          );
+          return ScopedModel<QueryModel>(
+              model: QueryModel(userModel: model),
+              child: ScopedModelDescendant<QueryModel>(
+                  builder: ((context, child, model) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'IRCTC',
+                  theme: ThemeData(
+                      backgroundColor: greyBackground,
+                      textTheme: GoogleFonts.latoTextTheme(),
+                      primarySwatch: getMaterialColor(swatch)),
+                  home: const OnBoardingPage(),
+                );
+              })));
         }));
   }
 }
@@ -69,7 +75,7 @@ class _MyHomeState extends State<MyHome> {
             _actualPos = value;
           },
           controller: _pageController,
-          children: const [
+          children: [
             /* SearchResultPage(
               query: Query(
                   to: "Gurugram",
@@ -82,9 +88,9 @@ class _MyHomeState extends State<MyHome> {
                     Passenger()
                   ]),
             ), */
-            HomePage(),
+            const HomePage(),
             TicketPage(),
-            ProfilePage()
+            const ProfilePage()
           ],
         ),
         bottomNavigationBar: BubbleBottomBar(

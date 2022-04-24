@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
-import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
-import 'package:irctc_dbms/app/views/elements/ticket_tile.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
 
 class ProfilePage extends StatefulWidget {

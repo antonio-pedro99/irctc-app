@@ -1,5 +1,3 @@
-import 'package:irctc_dbms/app/models/passenger.dart';
-
 class Query {
   String? from;
   String? to;

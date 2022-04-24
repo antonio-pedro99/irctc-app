@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/controllers/traveller_selecter_controller.dart';
+import 'package:irctc_dbms/app/models/scoped/query.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/search_query.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
@@ -290,10 +291,11 @@ class _HomePageState extends State<HomePage>
                                           "minors":
                                               int.parse(minorController.text),
                                         });
+                                    QueryModel.of(context)
+                                        .setQuery(searchQuery);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(builder: (context) {
-                                      return SearchResultPage(
-                                          query: searchQuery);
+                                      return SearchResultPage();
                                     }));
                                   },
                                   () {
@@ -324,8 +326,7 @@ class _HomePageState extends State<HomePage>
                                         });
                                     Navigator.of(context).push(
                                         MaterialPageRoute(builder: (context) {
-                                      return SearchResultPage(
-                                          query: searchQuery);
+                                      return SearchResultPage();
                                     }));
                                   },
                                   () {
