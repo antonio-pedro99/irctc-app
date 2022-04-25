@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/app.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/models/user_register.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController phoneController = TextEditingController();
+    TextEditingController fullnameController = TextEditingController();
     return Scaffold(
         backgroundColor: Colors.white,
         body: CustomScrollView(
@@ -40,6 +45,7 @@ class RegisterPage extends StatelessWidget {
                         return "Invalid name";
                       }
                     },
+                    controller: fullnameController,
                     decoration: InputDecoration(
                         hintText: "Enter your full name",
                         prefixIcon:
@@ -61,6 +67,7 @@ class RegisterPage extends StatelessWidget {
                         return "Enter correct email";
                       }
                     },
+                    controller: emailController,
                     decoration: InputDecoration(
                         hintText: "Enter your email",
                         prefixIcon:
@@ -80,6 +87,8 @@ class RegisterPage extends StatelessWidget {
                         return "Enter correct number";
                       }
                     },
+                    controller: phoneController,
+                    keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                         hintText: "Enter your number",
                         prefixIcon:
@@ -99,6 +108,7 @@ class RegisterPage extends StatelessWidget {
                         return "Enter correct paramter";
                       }
                     },
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                         hintText: "Enter your password",
@@ -125,6 +135,11 @@ class RegisterPage extends StatelessWidget {
                           backgroundColor: MaterialStateProperty.resolveWith(
                               (states) => primary)),
                       onPressed: () {
+                        UserRegister register = UserRegister(
+                            name: fullnameController.text,
+                            email: emailController.text,
+                            phone: phoneController.text,
+                            password: passwordController.text);
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) {
                           return const MyHome();

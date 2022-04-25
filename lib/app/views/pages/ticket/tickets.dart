@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
+import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
 import 'package:irctc_dbms/app/views/elements/ticket_tile.dart';
+import 'package:irctc_dbms/app/views/pages/login/login.dart';
 import 'package:irctc_dbms/app/views/pages/ticket/ticket_details.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
@@ -41,89 +43,112 @@ class TicketPage extends StatelessWidget {
               actions: []),
           body: SafeArea(
               minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: ListView(
-                children: [
-                  GestureDetector(
-                    child: TicketTile(
-                      ticket: _ticket,
-                    ),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return TicketDetailPage(
-                          ticket: _ticket,
-                        );
-                      }));
-                    },
-                  ),
-                  TicketTile(
-                      ticket: Ticket(
-                          from: "NEW DELHI",
-                          to: "GOA",
-                          date: "Jan 15, 2022",
-                          departureTime: "10:45",
-                          aririvalTime: "03:00",
-                          trainId: "103",
-                          seat: 200,
-                          tripId: "23423",
-                          price: 100)),
-                  TicketTile(
-                      ticket: Ticket(
-                          from: "NEW DELHI",
-                          to: "GOA",
-                          date: "Jan 15, 2022",
-                          departureTime: "10:45",
-                          aririvalTime: "03:00",
-                          trainId: "103",
-                          seat: 200,
-                          tripId: "23423",
-                          price: 100)),
-                  TicketTile(
-                      ticket: Ticket(
-                          from: "NEW DELHI",
-                          to: "GOA",
-                          date: "Jan 15, 2022",
-                          departureTime: "10:45",
-                          aririvalTime: "03:00",
-                          trainId: "103",
-                          seat: 200,
-                          tripId: "23423",
-                          price: 100)),
-                  TicketTile(
-                      ticket: Ticket(
-                          from: "NEW DELHI",
-                          to: "GOA",
-                          date: "Jan 15, 2022",
-                          departureTime: "10:45",
-                          aririvalTime: "03:00",
-                          trainId: "103",
-                          seat: 200,
-                          tripId: "23423",
-                          price: 100)),
-                  TicketTile(
-                      ticket: Ticket(
-                          from: "NEW DELHI",
-                          to: "GOA",
-                          date: "Jan 15, 2022",
-                          departureTime: "10:45",
-                          aririvalTime: "03:00",
-                          trainId: "103",
-                          seat: 200,
-                          tripId: "23423",
-                          price: 100)),
-                  TicketTile(
-                      ticket: Ticket(
-                          from: "NEW DELHI",
-                          to: "GOA",
-                          date: "Jan 15, 2022",
-                          departureTime: "10:45",
-                          aririvalTime: "03:00",
-                          trainId: "103",
-                          seat: 200,
-                          tripId: "23423",
-                          price: 100)),
-                ],
-              )));
+              child: model.isLogged()
+                  ? ListView(
+                      children: [
+                        GestureDetector(
+                          child: TicketTile(
+                            ticket: _ticket,
+                          ),
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return TicketDetailPage(
+                                ticket: _ticket,
+                              );
+                            }));
+                          },
+                        ),
+                        TicketTile(
+                            ticket: Ticket(
+                                from: "NEW DELHI",
+                                to: "GOA",
+                                date: "Jan 15, 2022",
+                                departureTime: "10:45",
+                                aririvalTime: "03:00",
+                                trainId: "103",
+                                seat: 200,
+                                tripId: "23423",
+                                price: 100)),
+                        TicketTile(
+                            ticket: Ticket(
+                                from: "NEW DELHI",
+                                to: "GOA",
+                                date: "Jan 15, 2022",
+                                departureTime: "10:45",
+                                aririvalTime: "03:00",
+                                trainId: "103",
+                                seat: 200,
+                                tripId: "23423",
+                                price: 100)),
+                        TicketTile(
+                            ticket: Ticket(
+                                from: "NEW DELHI",
+                                to: "GOA",
+                                date: "Jan 15, 2022",
+                                departureTime: "10:45",
+                                aririvalTime: "03:00",
+                                trainId: "103",
+                                seat: 200,
+                                tripId: "23423",
+                                price: 100)),
+                        TicketTile(
+                            ticket: Ticket(
+                                from: "NEW DELHI",
+                                to: "GOA",
+                                date: "Jan 15, 2022",
+                                departureTime: "10:45",
+                                aririvalTime: "03:00",
+                                trainId: "103",
+                                seat: 200,
+                                tripId: "23423",
+                                price: 100)),
+                        TicketTile(
+                            ticket: Ticket(
+                                from: "NEW DELHI",
+                                to: "GOA",
+                                date: "Jan 15, 2022",
+                                departureTime: "10:45",
+                                aririvalTime: "03:00",
+                                trainId: "103",
+                                seat: 200,
+                                tripId: "23423",
+                                price: 100)),
+                        TicketTile(
+                            ticket: Ticket(
+                                from: "NEW DELHI",
+                                to: "GOA",
+                                date: "Jan 15, 2022",
+                                departureTime: "10:45",
+                                aririvalTime: "03:00",
+                                trainId: "103",
+                                seat: 200,
+                                tripId: "23423",
+                                price: 100)),
+                      ],
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "You need to make login",
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          const SizedBox(height: 24),
+                          RoundedButton(
+                              label: "Login now",
+                              labelColor: Colors.white,
+                              onPress: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (context) {
+                                  return const LoginPage();
+                                }));
+                              })
+                        ],
+                      ),
+                    )));
     }));
   }
 }

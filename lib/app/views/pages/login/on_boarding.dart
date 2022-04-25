@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:irctc_dbms/app/app.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/login/opt_1.dart';
 
 class OnBoardingPage extends StatelessWidget {
@@ -64,7 +66,7 @@ class OnBoardingPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) {
-                          return const OTP1();
+                          return const MyHome();
                         }), (route) => false);
                       },
                       child: const Text("Explore",

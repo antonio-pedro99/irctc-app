@@ -14,6 +14,7 @@ import 'package:irctc_dbms/app/views/pages/profile.dart';
 import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -63,7 +64,13 @@ class _MyHomeState extends State<MyHome> {
   @override
   void dispose() {
     _pageController.dispose();
+    _loadData();
     super.dispose();
+  }
+
+  _loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    UserModel.of(context).logged = prefs.getBool("islogged");
   }
 
   @override

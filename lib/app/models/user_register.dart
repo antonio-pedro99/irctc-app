@@ -1,27 +1,24 @@
-class User {
+class UserRegister {
   String? email;
   String? phone;
-  int? id;
-  int? age;
   String? name;
+  String? password;
 
-  User({this.email, this.phone, this.id, this.age, this.name});
+  UserRegister({this.email, this.phone, this.name, this.password});
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserRegister.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     phone = json['phone'];
-    id = json['id'];
-    age = json['age'];
     name = json['name'];
+    password = json['password'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['email'] = email;
     data['phone'] = phone;
-    data['id'] = id;
-    data['age'] = age;
-    data['name'] = name;
+    data['name'] =name;
+    data['password'] = password;
     return data;
   }
 }

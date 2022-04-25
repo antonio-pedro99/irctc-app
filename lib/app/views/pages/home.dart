@@ -99,7 +99,8 @@ class _HomePageState extends State<HomePage>
           builder: (context) {
             return AlertDialog(
               content: Container(
-                height: MediaQuery.of(context).size.height / 3,
+                height: 225,
+                width: 225,
                 child: ListView(
                   children: [
                     ChangeNotifierProvider(
@@ -188,19 +189,22 @@ class _HomePageState extends State<HomePage>
                 : Padding(
                     padding: const EdgeInsets.fromLTRB(12, 55, 0, 0),
                     child: ListView(
-                      children: const [
-                        Text("Welcome back!",
+                      children: [
+                        Text(
+                            model.isLogged()
+                                ? "Hey, ${model.userData["name"]} Welcome back!"
+                                : "Hey, Welcome!",
                             textAlign: TextAlign.start,
                             softWrap: true,
                             overflow: TextOverflow.visible,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20,
                                 color: grey)),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        Text("Where we will\ngo today?",
+                        const Text("Where we will\ngo today?",
                             textAlign: TextAlign.start,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -219,24 +223,28 @@ class _HomePageState extends State<HomePage>
               sliver: SliverList(
                   delegate: SliverChildListDelegate([
                 const SizedBox(height: 10),
-                const Text("Your recent Trip",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: grey,
-                        fontWeight: FontWeight.w600)),
+                model.isLogged()
+                    ? const Text("Your recent Trip",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: grey,
+                            fontWeight: FontWeight.w600))
+                    : Container(),
                 const SizedBox(height: 5),
-                TicketTile(
-                  ticket: Ticket(
-                      from: "NEW DELHI",
-                      to: "GOA",
-                      date: "Jan 15, 2022",
-                      departureTime: "10:45",
-                      aririvalTime: "03:00",
-                      trainId: "103",
-                      seat: 200,
-                      tripId: "23423",
-                      price: 100),
-                ),
+                model.isLogged()
+                    ? TicketTile(
+                        ticket: Ticket(
+                            from: "NEW DELHI",
+                            to: "GOA",
+                            date: "Jan 15, 2022",
+                            departureTime: "10:45",
+                            aririvalTime: "03:00",
+                            trainId: "103",
+                            seat: 200,
+                            tripId: "23423",
+                            price: 100),
+                      )
+                    : Container(),
                 const SizedBox(height: 5),
                 const Text("Your next trip details",
                     style: TextStyle(
