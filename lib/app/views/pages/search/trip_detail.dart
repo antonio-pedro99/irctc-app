@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/search_query.dart';
 import 'package:irctc_dbms/app/models/trip.dart';
@@ -17,6 +18,10 @@ class TripDetail extends StatefulWidget {
 }
 
 class _TripDetailState extends State<TripDetail> {
+  String formatTime(String date) {
+    return DateFormat(DateFormat.HOUR24_MINUTE).format(DateTime.parse(date));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +45,8 @@ class _TripDetailState extends State<TripDetail> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 4,
                 child: Padding(
-                  padding: const EdgeInsets.all(12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: DefaultTextStyle(
                     style: const TextStyle(color: Colors.white),
                     child: Column(
@@ -107,7 +113,8 @@ class _TripDetailState extends State<TripDetail> {
                 child: DefaultTextStyle(
                     style: const TextStyle(fontSize: 16, color: primary),
                     child: ListView(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,28 +144,32 @@ class _TripDetailState extends State<TripDetail> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                    "${widget.trip!.fromCode} - ${widget.trip!.from}",
+                                    "${widget.trip!.locationCode} - ${widget.trip!.locationFrom}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 20,
                                         color: primary)),
                                 const SizedBox(height: 10),
                                 Text(
-                                  "${widget.trip!.departureTime} AM",
+                                  "You will departure at: " +
+                                      formatTime(widget.trip!.dtDeparture!),
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   "Train ${widget.trip!.trainId}",
                                 ),
                                 const SizedBox(height: 5),
-                                Text("${widget.trip!.stationLocation}",
+                                Text(
+                                    "${widget.trip!.localMetrostation} Station",
                                     style: const TextStyle(
                                         fontSize: 16,
                                         color: primary,
                                         fontWeight: FontWeight.w600)),
                                 const SizedBox(height: 5),
                                 Text(
-                                  "${widget.trip!.duration}",
+                                  widget.trip!.duration == null
+                                      ? "0"
+                                      : "${widget.trip!.duration}",
                                 )
                               ],
                             ))
@@ -167,7 +178,7 @@ class _TripDetailState extends State<TripDetail> {
                         const SizedBox(
                           height: 15,
                         ),
-                        widget.trip!.stops!.isNotEmpty
+                        /* widget.trip!.stops!.isNotEmpty
                             ? SizedBox(
                                 height: MediaQuery.of(context).size.height,
                                 child: ListView.builder(
@@ -180,7 +191,7 @@ class _TripDetailState extends State<TripDetail> {
                               )
                             : const Divider(
                                 height: 3,
-                              ),
+                              ), */
                         const SizedBox(
                           height: 15,
                         ),
@@ -215,18 +226,19 @@ class _TripDetailState extends State<TripDetail> {
                                   height: 40,
                                 ),
                                 Text(
-                                  "${widget.trip!.arrivalTime} AM",
+                                  "You will arrive at: " +
+                                      formatTime(widget.trip!.dtArrival!),
                                 ),
                                 const SizedBox(height: 5),
                                 const SizedBox(height: 5),
-                                Text("${widget.trip!.stationLocation}",
+                                Text("${widget.trip!.destinationMetrostation}",
                                     style: const TextStyle(
                                         fontSize: 16,
                                         color: primary,
                                         fontWeight: FontWeight.w600)),
                                 const SizedBox(height: 10),
                                 Text(
-                                    "${widget.trip!.toCode} - ${widget.trip!.to}",
+                                    "${widget.trip!.destinationCode} - ${widget.trip!.destinationTo}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 20,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/query.dart';
-import 'package:irctc_dbms/app/models/search_query.dart';
 import 'package:irctc_dbms/app/models/trip.dart';
+import 'package:irctc_dbms/app/services/trip.dart';
 import 'package:irctc_dbms/app/views/elements/trip_tile.dart';
 import 'package:irctc_dbms/app/views/pages/search/filter_page.dart';
 import 'package:irctc_dbms/app/views/pages/search/trip_detail.dart';
@@ -12,8 +12,8 @@ import 'package:scoped_model/scoped_model.dart';
 bool filterApplied = false;
 
 class SearchResultPage extends StatelessWidget {
-  SearchResultPage({Key? key}) : super(key: key);
-  final _trip = Trip(
+  const SearchResultPage({Key? key}) : super(key: key);
+  /*  final _trip = Trip(
     from: "New Delhi",
     fromCode: "DLX",
     to: "Gugugram",
@@ -58,7 +58,8 @@ class SearchResultPage extends StatelessWidget {
     ],
     passengers: [],
     date: "Jan 15, 2022",
-  );
+  ); */
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<QueryModel>(builder: (context, child, model) {
@@ -127,24 +128,38 @@ class SearchResultPage extends StatelessWidget {
                     ),
                   )),
               Expanded(
-                  child: ListView(
-                padding: const EdgeInsets.all(12),
-                children: [
-                  InkWell(
-                    child: TripTile(
-                      trip: _trip,
-                    ),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return TripDetail(
-                          trip: _trip,
-                          query: model.currentQuery,
+                  child: FutureBuilder<List<Trip>>(
+                future: TripProvider.fetchTrips(
+                    model.currentQuery!.from!, model.currentQuery!.to!),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("${snapshot.error}"),
+                    );
+                  }
+                  return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: ((context, index) {
+                        return InkWell(
+                          child: TripTile(
+                            trip: snapshot.data![index],
+                          ),
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return TripDetail(
+                                trip: snapshot.data![index],
+                                query: model.currentQuery,
+                              );
+                            }));
+                          },
                         );
                       }));
-                    },
-                  )
-                ],
+                },
               ))
             ],
           ),

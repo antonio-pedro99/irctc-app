@@ -239,9 +239,9 @@ class _HomePageState extends State<HomePage>
                             date: "Jan 15, 2022",
                             departureTime: "10:45",
                             aririvalTime: "03:00",
-                            trainId: "103",
+                            trainId: 103,
                             seat: 200,
-                            tripId: "23423",
+                            tripId: 1204,
                             price: 100),
                       )
                     : Container(),

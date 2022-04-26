@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/trip.dart';
 import 'package:irctc_dbms/app/views/elements/bubble_line.dart';
@@ -7,10 +8,15 @@ class TripTile extends StatelessWidget {
   const TripTile({Key? key, this.trip}) : super(key: key);
 
   final Trip? trip;
+
+  String formatTime(String date) {
+    return DateFormat(DateFormat.HOUR24_MINUTE).format(DateTime.parse(date));
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
-    var _stops = trip!.stops!.length;
+    //var _stops = trip!.stops!.length;
     return Card(
       borderOnForeground: false,
       elevation: 0.1,
@@ -52,7 +58,7 @@ class TripTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("${trip!.fromCode}",
+                        Text("${trip!.locationCode}",
                             strutStyle: StrutStyle.disabled,
                             softWrap: false,
                             overflow: TextOverflow.fade,
@@ -60,7 +66,7 @@ class TripTile extends StatelessWidget {
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 20)),
                         Text(
-                          "${trip!.departureTime} AM",
+                          formatTime(trip!.dtDeparture!),
                         )
                       ],
                     ),
@@ -73,9 +79,12 @@ class TripTile extends StatelessWidget {
                           style: const TextStyle(fontWeight: FontWeight.normal),
                         ),
                         const BubbleLine(),
-                        Text( _stops > 0? 
+                        const Text(
+                          "Non-Stop",
+                          style: TextStyle(fontWeight: FontWeight.normal),
+                          /*  Text( _stops > 0? 
                           "${trip!.stops!.length} stops" : "Non-Stop",
-                          style: const TextStyle(fontWeight: FontWeight.normal),
+                          style: const TextStyle(fontWeight: FontWeight.normal), */
                         ),
                       ],
                     ),
@@ -83,12 +92,12 @@ class TripTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text("${trip!.toCode}",
+                        Text("${trip!.destinationCode}",
                             textAlign: TextAlign.end,
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 20)),
                         Text(
-                          "${trip!.arrivalTime}",
+                          formatTime(trip!.dtArrival!),
                         )
                       ],
                     )

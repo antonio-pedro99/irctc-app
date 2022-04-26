@@ -37,14 +37,14 @@ class StopTripTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${trip!.fromCode} - ${trip!.from}",
+                Text("${trip!.locationCode} - ${trip!.locationFrom}",
                     style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
                         color: primary)),
                 const SizedBox(height: 10),
                 Text(
-                  "${trip!.departureTime} AM",
+                  "${trip!.dtDeparture} AM",
                 ),
                 const SizedBox(height: 5),
                 Text(

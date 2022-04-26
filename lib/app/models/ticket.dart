@@ -1,14 +1,15 @@
 class Ticket {
   String? from;
   String? to;
-  int? price;
+  double? price;
   String? date;
   String? departureTime;
   String? aririvalTime;
-  String? tripId;
-  String? trainId;
+  int? tripId;
+  int? trainId;
   int? seat;
   String? barcode;
+  int? passengerId;
 
   Ticket(
       {this.from,
@@ -20,6 +21,7 @@ class Ticket {
       this.tripId,
       this.trainId,
       this.barcode,
+      this.passengerId,
       this.seat});
 
   Ticket.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class Ticket {
     tripId = json['trip_id'];
     trainId = json['train_id'];
     seat = json["seat"];
+    passengerId = json["passenger_id"];
     barcode = json['barcode'];
   }
 
@@ -47,6 +50,7 @@ class Ticket {
     data['train_id'] = trainId;
     data['barcode'] = barcode;
     data["seat"] = seat;
+    data["passenger_id"] = passengerId;
     return data;
   }
 }
