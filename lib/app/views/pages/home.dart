@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage>
                             fontWeight: FontWeight.w600))
                     : Container(),
                 const SizedBox(height: 5),
-                model.isLogged()
+                /* model.isLogged()
                     ? TicketTile(
                         ticket: Ticket(
                             from: "NEW DELHI",
@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage>
                             tripId: 1204,
                             price: 100),
                       )
-                    : Container(),
+                    : Container(), */
                 const SizedBox(height: 5),
                 const Text("Your next trip details",
                     style: TextStyle(

@@ -1,56 +1,37 @@
 class Ticket {
-  String? from;
-  String? to;
-  double? price;
-  String? date;
-  String? departureTime;
-  String? aririvalTime;
+  int? passengerId;
   int? tripId;
+  int? ticketId;
+  String? location;
+  String? destination;
+  double? price;
+  String? departure;
+  String? arrival;
   int? trainId;
   int? seat;
-  String? barcode;
-  int? passengerId;
 
   Ticket(
-      {this.from,
-      this.to,
-      this.price,
-      this.date,
-      this.departureTime,
-      this.aririvalTime,
+      {this.passengerId,
       this.tripId,
+      this.ticketId,
+      this.location,
+      this.destination,
+      this.price,
+      this.departure,
       this.trainId,
-      this.barcode,
-      this.passengerId,
+      this.arrival,
       this.seat});
 
   Ticket.fromJson(Map<String, dynamic> json) {
-    from = json['from'];
-    to = json['to'];
-    price = json['price'];
-    date = json['date'];
-    departureTime = json['departure_time'];
-    aririvalTime = json['aririval_time'];
+    passengerId = json['passenger_id'];
     tripId = json['trip_id'];
-    trainId = json['train_id'];
-    seat = json["seat"];
-    passengerId = json["passenger_id"];
-    barcode = json['barcode'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['from'] = from;
-    data['to'] = to;
-    data['price'] = price;
-    data['date'] = date;
-    data['departure_time'] = departureTime;
-    data['aririval_time'] = aririvalTime;
-    data['trip_id'] = tripId;
-    data['train_id'] = trainId;
-    data['barcode'] = barcode;
-    data["seat"] = seat;
-    data["passenger_id"] = passengerId;
-    return data;
+    ticketId = json['ticket_id'];
+    location = json['location'];
+    destination = json['destination'];
+    price = json['price'];
+    trainId = json['traind_id'];
+    departure = json['departure'];
+    arrival = json['arrival'];
+    seat = json['seat'];
   }
 }

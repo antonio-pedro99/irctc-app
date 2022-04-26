@@ -30,9 +30,9 @@ class TicketTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${ticket!.date}",
+                      "${ticket!.departure}",
                     ),
-                    Text("${ticket!.from}",
+                    Text("${ticket!.location}",
                         strutStyle: StrutStyle.disabled,
                         softWrap: false,
                         overflow: TextOverflow.fade,
@@ -40,7 +40,7 @@ class TicketTile extends StatelessWidget {
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 20)),
                     Text(
-                      "${ticket!.departureTime} AM",
+                      "${ticket!.departure}",
                     )
                   ],
                 ),
@@ -60,12 +60,12 @@ class TicketTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text("Trip: ${ticket!.tripId}"),
-                    Text("${ticket!.to}",
+                    Text("${ticket!.destination}",
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 20)),
                     Text(
-                      "${ticket!.aririvalTime} PM",
+                      "${ticket!.arrival}",
                     )
                   ],
                 )

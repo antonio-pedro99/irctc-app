@@ -77,12 +77,12 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${widget.ticket!.date}",
+                                  "${widget.ticket!.departure}",
                                 ),
                                 const SizedBox(
                                   height: 25,
                                 ),
-                                Text("${widget.ticket!.from}",
+                                Text("${widget.ticket!.location}",
                                     strutStyle: StrutStyle.disabled,
                                     softWrap: false,
                                     overflow: TextOverflow.fade,
@@ -94,7 +94,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                   height: 5,
                                 ),
                                 Text(
-                                  "${widget.ticket!.departureTime} AM",
+                                  "${widget.ticket!.departure}",
                                 ),
                                 const SizedBox(
                                   height: 25,
@@ -126,7 +126,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                 const SizedBox(
                                   height: 25,
                                 ),
-                                Text("${widget.ticket!.to}",
+                                Text("${widget.ticket!.destination}",
                                     textAlign: TextAlign.end,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w600,
@@ -135,7 +135,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                   height: 5,
                                 ),
                                 Text(
-                                  "${widget.ticket!.aririvalTime} PM",
+                                  "${widget.ticket!.arrival}",
                                 ),
                                 const SizedBox(
                                   height: 70,

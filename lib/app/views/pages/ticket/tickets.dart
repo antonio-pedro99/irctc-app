@@ -13,16 +13,19 @@ import 'package:scoped_model/scoped_model.dart';
 class TicketPage extends StatelessWidget {
   TicketPage({Key? key}) : super(key: key);
 
-  final Ticket _ticket = Ticket(
-      from: "NEW DELHI",
-      to: "GOA",
-      date: "Jan 15, 2022",
+  /* final Ticket _ticket = Ticket(
+      location: "NEW DELHI",
+      destination: "GOA",
+      departure: "Jan 15, 2022",
       departureTime: "10:45",
       aririvalTime: "03:00",
       trainId: 1054,
       seat: 200,
       tripId: 23423,
-      price: 100);
+
+      price: 100); */
+
+  final Ticket _ticket = Ticket(); //null
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(builder: ((context, child, model) {
