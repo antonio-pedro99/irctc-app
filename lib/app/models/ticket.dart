@@ -29,7 +29,7 @@ class Ticket {
     location = json['location'];
     destination = json['destination'];
     price = json['price'];
-    trainId = json['traind_id'];
+    trainId = json['traindId'];
     departure = json['departure'];
     arrival = json['arrival'];
     seat = json['seat'];

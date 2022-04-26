@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
@@ -13,6 +14,15 @@ class TicketDetailPage extends StatefulWidget {
 }
 
 class _TicketDetailPageState extends State<TicketDetailPage> {
+  String formatTime(String date) {
+    return DateFormat(DateFormat.HOUR24_MINUTE).format(DateTime.parse(date));
+  }
+
+  String formatDate(String date) {
+    return DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
+        .format(DateTime.parse(date));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +44,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10))),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3,
+                height: MediaQuery.of(context).size.height / 3.8,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: DefaultTextStyle(
@@ -57,7 +67,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                   Navigator.pop(context);
                                 },
                               ),
-                              const SizedBox(width: 120),
+                              const SizedBox(width: 100),
                               /*  const Text("Tickets",
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
@@ -67,7 +77,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                           ),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 5,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,9 +86,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "${widget.ticket!.departure}",
-                                ),
+                                Text(formatDate(widget.ticket!.departure!)),
                                 const SizedBox(
                                   height: 25,
                                 ),
@@ -93,11 +101,9 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  "${widget.ticket!.departure}",
-                                ),
+                                Text(formatTime(widget.ticket!.departure!)),
                                 const SizedBox(
-                                  height: 25,
+                                  height: 10,
                                 ),
                                 Text(
                                   "Rs ${widget.ticket!.price}",
@@ -134,9 +140,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                Text(
-                                  "${widget.ticket!.arrival}",
-                                ),
+                                Text(formatTime(widget.ticket!.arrival!)),
                                 const SizedBox(
                                   height: 70,
                                 ),
@@ -150,7 +154,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                 )),
             Expanded(
                 child: ListView(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               children: [
                 BoxRectangle(
                   title: "Train info",

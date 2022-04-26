@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
+import 'package:irctc_dbms/app/services/user.dart';
 import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
 import 'package:irctc_dbms/app/views/elements/ticket_tile.dart';
 import 'package:irctc_dbms/app/views/pages/login/login.dart';
@@ -25,7 +27,8 @@ class TicketPage extends StatelessWidget {
 
       price: 100); */
 
-  final Ticket _ticket = Ticket(); //null
+  //final Ticket _ticket = Ticket(); //null
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(builder: ((context, child, model) {
@@ -46,23 +49,39 @@ class TicketPage extends StatelessWidget {
               actions: []),
           body: SafeArea(
               minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: model.isLogged()
-                  ? ListView(
-                      children: [
-                        GestureDetector(
-                          child: TicketTile(
-                            ticket: _ticket,
-                          ),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return TicketDetailPage(
-                                ticket: _ticket,
-                              );
-                            }));
-                          },
-                        ),
-                      ],
+              //to be changed
+              child: !model.isLogged()
+                  ? FutureBuilder<List<Ticket>>(
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return const Center(
+                              child: Text(
+                                  "Unabled to fetch data, check your internet"));
+                        }
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: ((context, index) {
+                            return GestureDetector(
+                              child: TicketTile(
+                                ticket: snapshot.data![index],
+                              ),
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return TicketDetailPage(
+                                    ticket: snapshot.data![index],
+                                  );
+                                }));
+                              },
+                            );
+                          }),
+                        );
+                      },
+                      future: UserDataProvider.fetchticket(100),
                     )
                   : Center(
                       child: Column(

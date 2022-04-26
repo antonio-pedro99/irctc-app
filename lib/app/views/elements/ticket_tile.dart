@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/train_circle.dart';
@@ -10,6 +11,16 @@ class TicketTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
+
+    String formatTime(String date) {
+      return DateFormat(DateFormat.HOUR24_MINUTE).format(DateTime.parse(date));
+    }
+
+    String formatDate(String date) {
+      return DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
+          .format(DateTime.parse(date));
+    }
+
     return Card(
       borderOnForeground: false,
       elevation: 0.1,
@@ -29,9 +40,7 @@ class TicketTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${ticket!.departure}",
-                    ),
+                    Text(formatDate(ticket!.departure!)),
                     Text("${ticket!.location}",
                         strutStyle: StrutStyle.disabled,
                         softWrap: false,
@@ -39,9 +48,7 @@ class TicketTile extends StatelessWidget {
                         textAlign: TextAlign.start,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 20)),
-                    Text(
-                      "${ticket!.departure}",
-                    )
+                    Text(formatTime(ticket!.departure!))
                   ],
                 ),
                 Column(
@@ -64,9 +71,7 @@ class TicketTile extends StatelessWidget {
                         textAlign: TextAlign.end,
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 20)),
-                    Text(
-                      "${ticket!.arrival}",
-                    )
+                    Text(formatTime(ticket!.arrival!))
                   ],
                 )
               ],
