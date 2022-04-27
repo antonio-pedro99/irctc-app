@@ -28,6 +28,7 @@ class Auth {
         .then((value) {
       if (value.statusCode == 200) {
         User logged = User.fromJson(json.decode(value.body));
+        print(logged.id);
         ControlLogin.updateLogin("currentUserID", "${logged.id}");
       } else {
         res["msg"] = value.statusCode;

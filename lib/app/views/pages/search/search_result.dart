@@ -128,7 +128,7 @@ class SearchResultPage extends StatelessWidget {
                     ),
                   )),
               Expanded(
-                  child: FutureBuilder<List<Trip>>(
+                  child: Padding(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), child: FutureBuilder<List<Trip>>(
                 future: TripProvider.fetchTrips(
                     model.currentQuery!.from!, model.currentQuery!.to!),
                 builder: (context, snapshot) {
@@ -160,7 +160,7 @@ class SearchResultPage extends StatelessWidget {
                         );
                       }));
                 },
-              ))
+              )))
             ],
           ),
           floatingActionButton: FloatingActionButton(

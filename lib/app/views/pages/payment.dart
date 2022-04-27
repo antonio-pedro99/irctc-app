@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/models/scoped/user.dart';
 
 import 'package:irctc_dbms/app/models/trip.dart';
+import 'package:irctc_dbms/app/services/user.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
+import 'package:irctc_dbms/app/views/pages/login/login.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -68,63 +74,112 @@ class _PaymentPageState extends State<PaymentPage>
               statusBarBrightness: Brightness.light,
               statusBarColor: primary30),
         ),
-        body: DefaultTabController(
-            length: 3,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TabBar(
-                      controller: tabController,
-                      labelColor: Colors.white,
-                      unselectedLabelColor: grey,
-                      labelStyle: const TextStyle(fontSize: 16),
-                      //indicatorColor: Colors.white,
-                      indicator: RectangularIndicator(
-                          bottomLeftRadius: 13,
-                          bottomRightRadius: 13,
-                          topLeftRadius: 13,
-                          topRightRadius: 13,
-                          color: swatch),
-                      tabs: tabs),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 2,
-                    width: MediaQuery.of(context).size.width,
-                    child: TabBarView(
-                      children: [
-                        cardPaymentMethod(context),
-                        //Container(color: Colors.red),
-                        Container(color: Colors.yellow),
-                        Container(color: Colors.orange),
-                      ],
-                      controller: tabController,
+        body:
+            ScopedModelDescendant<UserModel>(builder: ((context, child, model) {
+          return DefaultTabController(
+              length: 3,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TabBar(
+                        controller: tabController,
+                        labelColor: Colors.white,
+                        unselectedLabelColor: grey,
+                        labelStyle: const TextStyle(fontSize: 16),
+                        //indicatorColor: Colors.white,
+                        indicator: RectangularIndicator(
+                            bottomLeftRadius: 13,
+                            bottomRightRadius: 13,
+                            topLeftRadius: 13,
+                            topRightRadius: 13,
+                            color: swatch),
+                        tabs: tabs),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 2,
+                      width: MediaQuery.of(context).size.width,
+                      child: TabBarView(
+                        children: [
+                          cardPaymentMethod(context),
+                          //Container(color: Colors.red),
+                          Container(color: Colors.yellow),
+                          Container(color: Colors.orange),
+                        ],
+                        controller: tabController,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  TextButton(
-                      style: ButtonStyle(
-                          maximumSize: MaterialStateProperty.resolveWith(
-                              (states) => const Size(200, 50)),
-                          minimumSize: MaterialStateProperty.resolveWith(
-                              (states) => const Size(170, 50)),
-                          alignment: Alignment.center,
-                          backgroundColor: MaterialStateProperty.resolveWith(
-                              (states) => primary)),
-                      onPressed: () {},
-                      child: const Text("Pay now",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16))),
-                ],
-              ),
-            )));
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    TextButton(
+                        style: ButtonStyle(
+                            maximumSize: MaterialStateProperty.resolveWith(
+                                (states) => const Size(200, 50)),
+                            minimumSize: MaterialStateProperty.resolveWith(
+                                (states) => const Size(170, 50)),
+                            alignment: Alignment.center,
+                            backgroundColor: MaterialStateProperty.resolveWith(
+                                (states) => primary)),
+                        onPressed: () async {
+                          if (model.isLogged()) {
+                            var payment = {
+                              "payment_method": tabController.index + 1,
+                              "amount": widget.trip!.price,
+                              "date": DateTime.now().toString()
+                            };
+                            var paymentDetails =
+                                await FakeRazorPayApi.paymentGateway(payment);
+
+                            var selection = {
+                              "trip_id": widget.trip!.tripId,
+                              "passenger_id": 500,
+                              "payment_id": paymentDetails["paymentID"]
+                            };
+
+                            await UserDataProvider.bookTicket(selection);
+                          } else {
+                            setState(() {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content: Container(
+                                        height: 100,
+                                        alignment: Alignment.center,
+                                        child: const Text(
+                                            "You are not logged in, login in first"),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const LoginPage();
+                                            }));
+                                          },
+                                          child: const Text("Please login"),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            });
+                          }
+                        },
+                        child: const Text("Pay now",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16))),
+                  ],
+                ),
+              ));
+        })));
   }
 
   Widget cardPaymentMethod(BuildContext context) {

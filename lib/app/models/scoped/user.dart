@@ -4,9 +4,9 @@ import 'package:irctc_dbms/app/models/user.dart';
 import 'package:irctc_dbms/app/models/user_login.dart';
 import 'package:irctc_dbms/app/models/user_register.dart';
 import 'package:irctc_dbms/app/services/auth.dart';
+import 'package:irctc_dbms/app/services/user.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
-
 
 class UserModel extends Model {
   bool isLoading = false;
@@ -30,14 +30,15 @@ class UserModel extends Model {
   }
 
   loadUser() {
-    /*   if (_currentUser != null) {
+    if (_currentUser != null) {
       userData = _currentUser!.toJson();
-    } */
+    }
     notifyListeners();
   }
 
   Future<void> _load() async {
     logged = await ControlLogin.currentUserID();
+    notifyListeners();
   }
 
   Future<bool> createUser(UserRegister userregister) async {
@@ -50,18 +51,19 @@ class UserModel extends Model {
   }
 
   bool makeLogin(String email, String password) {
-    isLoading = true;
     notifyListeners();
     Auth.signWithEmailAndPassword(UserLogin(email: email, password: password));
 
     if (Auth.res["msg"] != 400) {
       _load();
       notifyListeners();
-      loadUser();
+      UserDataProvider.getUserDetails(ControlLogin.userID).then((value) {
+        _currentUser = value;
+        loadUser();
+      });
       return true;
     }
 
-    isLoading = false;
     notifyListeners();
     return false;
   }
@@ -73,11 +75,12 @@ class UserModel extends Model {
   makelogout() {
     _currentUser = null;
     logged = null;
+    ControlLogin.updateLogin("currentUserID", "0");
     saveLogin();
     notifyListeners();
   }
 
   isLogged() {
-    return logged != null;
+    return _currentUser != null;
   }
 }

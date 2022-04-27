@@ -19,7 +19,7 @@ class TripProvider {
       }
       return trips_dumb;
     } else {
-      throw Exception("Failed to fetch notes");
+      throw Exception("Failed to fetch trips");
     }
   }
 }

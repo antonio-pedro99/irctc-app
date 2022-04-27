@@ -10,6 +10,7 @@ import 'package:irctc_dbms/app/models/scoped/user.dart';
 
 import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/login/on_boarding.dart';
+import 'package:irctc_dbms/app/views/pages/notifications.dart';
 import 'package:irctc_dbms/app/views/pages/profile.dart';
 
 import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
@@ -65,11 +66,9 @@ class _MyHomeState extends State<MyHome> {
   @override
   void dispose() {
     _pageController.dispose();
-  
+
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,20 +80,9 @@ class _MyHomeState extends State<MyHome> {
           },
           controller: _pageController,
           children: [
-            /* SearchResultPage(
-              query: Query(
-                  to: "Gurugram",
-                  from: "New Delhi",
-                  departure: "Jan 15, 2022",
-                  passengers: [
-                    Passenger(),
-                    Passenger(),
-                    Passenger(),
-                    Passenger()
-                  ]),
-            ), */
             const HomePage(),
             TicketPage(),
+            const NotificationsPage(),
             const ProfilePage()
           ],
         ),
@@ -140,6 +128,23 @@ class _MyHomeState extends State<MyHome> {
                   ),
                 ),
                 title: const Text("Tickets")),
+            BubbleBottomBarItem(
+                backgroundColor: swatch,
+                icon: Transform.rotate(
+                  angle: 0,
+                  child: Icon(
+                    Icons.notifications,
+                    color: Colors.grey[500],
+                  ),
+                ),
+                activeIcon: Transform.rotate(
+                  angle: 0,
+                  child: const Icon(
+                    Icons.notifications,
+                    color: swatch,
+                  ),
+                ),
+                title: const Text("Notifications")),
             BubbleBottomBarItem(
                 backgroundColor: swatch,
                 icon: Icon(

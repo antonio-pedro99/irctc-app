@@ -21,10 +21,6 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: ScopedModelDescendant<UserModel>(builder: (context, child, model) {
-        if (model.isLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
         return CustomScrollView(
           slivers: [
             const SliverAppBar(
@@ -121,13 +117,11 @@ class LoginPage extends StatelessWidget {
                                   UserLogin login = UserLogin(
                                       email: emailController.text,
                                       password: passwordController.text);
-                                  /*  Auth.signWithEmailAndPassword(login)
-                            .then((value) => print(value)) */
+
                                   if (_formKey.currentState!.validate()) {
                                     model.makeLogin(emailController.text,
                                         passwordController.text);
-                                    print(
-                                        "logged in ${await ControlLogin.currentUserID()}");
+                                    Navigator.of(context).pop();
                                   }
                                 },
                                 child: const Text("Login",
