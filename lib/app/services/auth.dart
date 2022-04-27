@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/user.dart';
 import 'package:irctc_dbms/app/models/user_register.dart';
 import 'package:irctc_dbms/app/services/endpoints.dart';
@@ -12,28 +13,29 @@ import 'package:scoped_model/scoped_model.dart';
 import '../models/user_login.dart';
 
 class Auth {
-  static User? currentUser;
+  static dynamic res = {};
 
   static signWithEmailAndPassword(UserLogin login) async {
-    var response = await http.post(Uri.parse(authLogin),
-        headers: {
-          HttpHeaders.acceptHeader: 'application/json',
-          HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.varyHeader: "Accept",
-          HttpHeaders.allowHeader: "POST, OPTION"
-        },
-        body: json.encode(login.toJson()));
-
-    if (response.statusCode == 200) {
-      currentUser = User.fromJson(json.decode(response.body));
-    } else {
-      throw Exception(json.decode(response.body));
-    }
+    await http
+        .post(Uri.parse(authLogin),
+            headers: {
+              HttpHeaders.acceptHeader: 'application/json',
+              HttpHeaders.contentTypeHeader: 'application/json',
+              HttpHeaders.varyHeader: "Accept",
+              HttpHeaders.allowHeader: "POST, OPTION"
+            },
+            body: json.encode(login.toJson()))
+        .then((value) {
+      if (value.statusCode == 200) {
+        User logged = User.fromJson(json.decode(value.body));
+        ControlLogin.updateLogin("currentUserID", "${logged.id}");
+      } else {
+        res["msg"] = value.statusCode;
+      }
+    });
   }
 
-  User? get getCurrentUser => currentUser;
-  static dynamic res = {};
-  static Future<void> registerWithEmailAndPassword(UserRegister newUser) async {
+  static registerWithEmailAndPassword(UserRegister newUser) async {
     await http
         .post(Uri.parse(authRegister),
             headers: {

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/user.dart';
 import 'package:irctc_dbms/app/models/user_login.dart';
 import 'package:irctc_dbms/app/models/user_register.dart';
 import 'package:irctc_dbms/app/services/auth.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class UserModel extends Model {
   bool isLoading = false;
   User? _currentUser;
-  bool? logged = false;
+  static int? logged;
 
   // Auth auth = Auth();
   //Authentication authenticator = Authentication();
@@ -29,10 +30,14 @@ class UserModel extends Model {
   }
 
   loadUser() {
-    if (_currentUser != null) {
+    /*   if (_currentUser != null) {
       userData = _currentUser!.toJson();
-    }
+    } */
     notifyListeners();
+  }
+
+  Future<void> _load() async {
+    logged = await ControlLogin.currentUserID();
   }
 
   Future<bool> createUser(UserRegister userregister) async {
@@ -44,37 +49,35 @@ class UserModel extends Model {
     return false;
   }
 
-  makeLogin(String email, String password) {
+  bool makeLogin(String email, String password) {
     isLoading = true;
     notifyListeners();
     Auth.signWithEmailAndPassword(UserLogin(email: email, password: password));
-    _currentUser = Auth.currentUser;
-    notifyListeners();
-    loadUser();
+
+    if (Auth.res["msg"] != 400) {
+      _load();
+      notifyListeners();
+      loadUser();
+      return true;
+    }
+
     isLoading = false;
-    logged = true;
     notifyListeners();
-    /*  authenticator
-        .signWithEmailAndPassword(UserLogin(email: email, password: password))
-        .then((value) {
-      print(value.data);
-    }); */
+    return false;
   }
 
   saveLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool("islogged", logged!);
     notifyListeners();
   }
 
   makelogout() {
     _currentUser = null;
-    logged = false;
+    logged = null;
     saveLogin();
     notifyListeners();
   }
 
   isLogged() {
-    return logged;
+    return logged != null;
   }
 }

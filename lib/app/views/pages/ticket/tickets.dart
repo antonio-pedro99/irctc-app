@@ -81,7 +81,7 @@ class TicketPage extends StatelessWidget {
                           }),
                         );
                       },
-                      future: UserDataProvider.fetchticket(100),
+                      future: UserDataProvider.fetchticket(UserModel.logged!),
                     )
                   : Center(
                       child: Column(

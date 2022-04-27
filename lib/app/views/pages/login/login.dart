@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/app.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/user_login.dart';
 import 'package:irctc_dbms/app/services/auth.dart';
@@ -116,7 +117,7 @@ class LoginPage extends StatelessWidget {
                                     backgroundColor:
                                         MaterialStateProperty.resolveWith(
                                             (states) => primary)),
-                                onPressed: () {
+                                onPressed: () async {
                                   UserLogin login = UserLogin(
                                       email: emailController.text,
                                       password: passwordController.text);
@@ -125,7 +126,8 @@ class LoginPage extends StatelessWidget {
                                   if (_formKey.currentState!.validate()) {
                                     model.makeLogin(emailController.text,
                                         passwordController.text);
-                                    Navigator.of(context).pop();
+                                    print(
+                                        "logged in ${await ControlLogin.currentUserID()}");
                                   }
                                 },
                                 child: const Text("Login",

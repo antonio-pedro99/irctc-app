@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/scoped/query.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 
@@ -64,14 +65,11 @@ class _MyHomeState extends State<MyHome> {
   @override
   void dispose() {
     _pageController.dispose();
-    _loadData();
+  
     super.dispose();
   }
 
-  _loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    UserModel.of(context).logged = prefs.getBool("islogged");
-  }
+
 
   @override
   Widget build(BuildContext context) {
