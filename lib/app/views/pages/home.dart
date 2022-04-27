@@ -10,10 +10,8 @@ import 'package:irctc_dbms/app/controllers/traveller_selecter_controller.dart';
 import 'package:irctc_dbms/app/models/scoped/query.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/search_query.dart';
-import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
 import 'package:irctc_dbms/app/views/elements/selecter.dart';
-import 'package:irctc_dbms/app/views/elements/ticket_tile.dart';
 import 'package:irctc_dbms/app/views/pages/search/search_result.dart';
 import 'package:provider/provider.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -176,10 +174,9 @@ class _HomePageState extends State<HomePage>
           body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: primary,
             title: const Text("Search Trips",
-                style: TextStyle(
-                    fontWeight: FontWeight.normal, fontSize: 20, color: grey)),
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20)),
             floating: true,
             elevation: 0,
             centerTitle: true,
@@ -200,7 +197,7 @@ class _HomePageState extends State<HomePage>
                             style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 20,
-                                color: grey)),
+                                color: Colors.white54)),
                         const SizedBox(
                           height: 15,
                         ),
@@ -209,14 +206,14 @@ class _HomePageState extends State<HomePage>
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 24,
-                                color: swatch))
+                                color: Colors.white))
                       ],
                     ),
                   ),
             systemOverlayStyle: const SystemUiOverlayStyle(
-                statusBarIconBrightness: Brightness.dark,
+                statusBarIconBrightness: Brightness.light,
                 statusBarBrightness: Brightness.light,
-                statusBarColor: Colors.white),
+                statusBarColor: primary30),
           ),
           SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -299,12 +296,14 @@ class _HomePageState extends State<HomePage>
                                           "minors":
                                               int.parse(minorController.text),
                                         });
-                                    QueryModel.of(context)
-                                        .setQuery(searchQuery);
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) {
-                                      return SearchResultPage();
-                                    }));
+                                    if (keyOneRoute.currentState!.validate()) {
+                                      QueryModel.of(context)
+                                          .setQuery(searchQuery);
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return const SearchResultPage();
+                                      }));
+                                    }
                                   },
                                   () {
                                     openDatePicker(context);
@@ -332,10 +331,12 @@ class _HomePageState extends State<HomePage>
                                           "minors":
                                               int.parse(minorController.text)
                                         });
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) {
-                                      return SearchResultPage();
-                                    }));
+                                    if (keyRoundTrip.currentState!.validate()) {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return const SearchResultPage();
+                                      }));
+                                    }
                                   },
                                   () {
                                     openDatePicker(context);
@@ -381,6 +382,7 @@ Widget oneRouteTrip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
+              return null;
             },
             decoration: InputDecoration(
                 hintText: "From",
@@ -399,6 +401,7 @@ Widget oneRouteTrip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
+              return null;
             },
             decoration: InputDecoration(
                 hintText: "To",
@@ -417,6 +420,7 @@ Widget oneRouteTrip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
+              return null;
             },
             decoration: InputDecoration(
                 hintText: "Departure",
@@ -435,6 +439,7 @@ Widget oneRouteTrip(
               if (str!.isEmpty) {
                 return "Please Enter a valid argument";
               }
+              return null;
             },
             decoration: InputDecoration(
                 hintText: "Travellers",

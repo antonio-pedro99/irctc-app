@@ -50,7 +50,7 @@ class TicketPage extends StatelessWidget {
           body: SafeArea(
               minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               //to be changed
-              child: !model.isLogged()
+              child: model.isLogged()
                   ? FutureBuilder<List<Ticket>>(
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {

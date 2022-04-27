@@ -7,6 +7,7 @@ class Ticket {
   double? price;
   String? departure;
   String? arrival;
+  bool? status;
   int? trainId;
   int? seat;
 
@@ -18,6 +19,7 @@ class Ticket {
       this.destination,
       this.price,
       this.departure,
+      this.status,
       this.trainId,
       this.arrival,
       this.seat});
@@ -33,5 +35,13 @@ class Ticket {
     departure = json['departure'];
     arrival = json['arrival'];
     seat = json['seat'];
+    status = json["status"];
   }
+
+  /*  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['location_from'] = locationFrom;
+    
+    return data; }*/
+
 }

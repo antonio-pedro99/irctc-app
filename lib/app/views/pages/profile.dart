@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
+import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
+import 'package:irctc_dbms/app/views/pages/login/login.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
 
@@ -32,200 +34,181 @@ class _ProfilePageState extends State<ProfilePage> {
                 statusBarBrightness: Brightness.light,
                 statusBarColor: primary30),
           ),
-          body: Column(
-            children: [
-              Container(
-                  decoration: const BoxDecoration(
-                      color: primary,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10))),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 7,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: DefaultTextStyle(
-                      style: const TextStyle(color: Colors.white),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+          body: model.isLogged()
+              ? ListView(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  children: [
+                    BoxRectangle(
+                      title: "Save for control",
+                      height: 125,
+                      color: Colors.white,
+                      body: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  child: const Icon(
-                                    Icons.arrow_back,
-                                    color: Colors.white,
-                                  ),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.print,
+                                size: 25,
+                                color: primary,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Print/Download",
+                                style: TextStyle(
+                                  fontSize: 18,
                                 ),
-                              ],
-                            ),
+                              )
+                            ],
                           ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.share,
+                                size: 25,
+                                color: primary,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text("Share",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ))
+                            ],
+                          )
                         ],
                       ),
                     ),
-                  )),
-              Expanded(
-                  child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                children: [
-                  BoxRectangle(
-                    title: "Save for control",
-                    height: 125,
-                    color: Colors.white,
-                    body: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.print,
-                              size: 25,
-                              color: primary,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Print/Download",
-                              style: TextStyle(
-                                fontSize: 18,
+                    const SizedBox(height: 15),
+                    BoxRectangle(
+                      title: "Save for control",
+                      height: 125,
+                      color: Colors.white,
+                      body: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.print,
+                                size: 25,
+                                color: primary,
                               ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.share,
-                              size: 25,
-                              color: primary,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text("Share",
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Print/Download",
                                 style: TextStyle(
                                   fontSize: 18,
-                                ))
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  BoxRectangle(
-                    title: "Save for control",
-                    height: 125,
-                    color: Colors.white,
-                    body: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.print,
-                              size: 25,
-                              color: primary,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Print/Download",
-                              style: TextStyle(
-                                fontSize: 18,
+                                ),
+                              )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.share,
+                                size: 25,
+                                color: primary,
                               ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.share,
-                              size: 25,
-                              color: primary,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text("Share",
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text("Share",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    BoxRectangle(
+                      title: "Save for control",
+                      height: 125,
+                      color: Colors.white,
+                      body: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.print,
+                                size: 25,
+                                color: primary,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Print/Download",
                                 style: TextStyle(
                                   fontSize: 18,
-                                ))
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  BoxRectangle(
-                    title: "Save for control",
-                    height: 125,
-                    color: Colors.white,
-                    body: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.print,
-                              size: 25,
-                              color: primary,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Print/Download",
-                              style: TextStyle(
-                                fontSize: 18,
+                                ),
+                              )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.share,
+                                size: 25,
+                                color: primary,
                               ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.share,
-                              size: 25,
-                              color: primary,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text("Share",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ))
-                          ],
-                        )
-                      ],
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text("Share",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                  ))
+                            ],
+                          )
+                        ],
+                      ),
                     ),
+                  ],
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "You need to make login",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      const SizedBox(height: 24),
+                      RoundedButton(
+                          label: "Login now",
+                          labelColor: Colors.white,
+                          onPress: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (context) {
+                              return const LoginPage();
+                            }));
+                          })
+                    ],
                   ),
-                ],
-              ))
-            ],
-          ));
+                ));
     });
   }
 }
