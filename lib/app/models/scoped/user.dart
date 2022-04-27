@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:irctc_dbms/app/models/user.dart';
 import 'package:irctc_dbms/app/models/user_login.dart';
+import 'package:irctc_dbms/app/models/user_register.dart';
 import 'package:irctc_dbms/app/services/auth.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
@@ -34,7 +35,14 @@ class UserModel extends Model {
     notifyListeners();
   }
 
-  createUser() {}
+  Future<bool> createUser(UserRegister userregister) async {
+    await Auth.registerWithEmailAndPassword(userregister);
+
+    if (Auth.res["sucess"] == 1) {
+      return true;
+    }
+    return false;
+  }
 
   makeLogin(String email, String password) {
     isLoading = true;

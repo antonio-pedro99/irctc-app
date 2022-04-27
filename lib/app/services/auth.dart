@@ -11,9 +11,8 @@ import 'package:scoped_model/scoped_model.dart';
 
 import '../models/user_login.dart';
 
-
-class Auth{
- static User? currentUser;
+class Auth {
+  static User? currentUser;
 
   static signWithEmailAndPassword(UserLogin login) async {
     var response = await http.post(Uri.parse(authLogin),
@@ -33,24 +32,39 @@ class Auth{
   }
 
   User? get getCurrentUser => currentUser;
-
-  Future<String> registerWithEmailAndPassword(UserRegister newUser) async {
-    var response = await http.post(Uri.parse(authRegister),
-        headers: {
-          HttpHeaders.acceptHeader: 'application/json',
-          HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.varyHeader: "Accept",
-          HttpHeaders.allowHeader: "POST, OPTION"
-        },
-        body: json.encode(newUser.toJson()));
-
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception("something bad happened");
-    }
+  static dynamic res = {};
+  static Future<void> registerWithEmailAndPassword(UserRegister newUser) async {
+    await http
+        .post(Uri.parse(authRegister),
+            headers: {
+              HttpHeaders.acceptHeader: 'application/json',
+              HttpHeaders.contentTypeHeader: 'application/json',
+              HttpHeaders.varyHeader: "Accept",
+              HttpHeaders.allowHeader: "POST, OPTION"
+            },
+            body: json.encode(newUser.toJson()))
+        .then((value) {
+      res = json.decode(value.body);
+    });
   }
 }
+
+  
+/* 
+  static final Dio _dio = Dio();
+
+  static Future<List<dynamic>> registerWithEmailAndPassword(
+      UserRegister userRegister) async {
+    try {
+      Response response = await _dio.post(authRegister,
+          data: userRegister.toJson(),
+          options: Options(headers: {"content-type": "application/json"}));
+      return response.data;
+    } on DioError catch (e) {
+      return e.response!.data;
+    }
+  }
+} */
  
 /* class Authentication {
   final Dio _dio = Dio();
