@@ -50,40 +50,40 @@ class TicketPage extends StatelessWidget {
           body: SafeArea(
               minimum: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               //to be changed
-              child: model.isLogged()
-                  ? FutureBuilder<List<Ticket>>(
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (snapshot.hasError) {
-                          return const Center(
-                              child: Text(
-                                  "Unabled to fetch data, check your internet"));
-                        }
-                        return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: ((context, index) {
-                            return GestureDetector(
-                              child: TicketTile(
-                                ticket: snapshot.data![index],
-                              ),
-                              onTap: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return TicketDetailPage(
-                                    ticket: snapshot.data![index],
-                                  );
-                                }));
-                              },
+              child: FutureBuilder<List<Ticket>>(
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Center(
+                        child:
+                            Text("Unabled to fetch data, check your internet"));
+                  }
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: ((context, index) {
+                      return GestureDetector(
+                        child: TicketTile(
+                          ticket: snapshot.data![index],
+                        ),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return TicketDetailPage(
+                              ticket: snapshot.data![index],
                             );
-                          }),
-                        );
-                      },
-                      future: UserDataProvider.getUserTickets(UserModel.logged!),
-                    )
-                  : Center(
+                          }));
+                        },
+                      );
+                    }),
+                  );
+                },
+                future: UserDataProvider.getUserTickets(
+                    int.parse(model.userData["id"])),
+              )
+              /*   : Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,8 +103,8 @@ class TicketPage extends StatelessWidget {
                                 }));
                               })
                         ],
-                      ),
-                    )));
+                      ), */
+              ));
     }));
   }
 }

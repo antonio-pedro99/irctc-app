@@ -29,10 +29,9 @@ class BoxRectangle extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title == null? "" : title!,
+                title == null ? Text(title!,
                   style: const TextStyle(fontWeight: FontWeight.w400),
-                ),
+                ) : Container(),
                 const SizedBox(
                   height: 10,
                 ),

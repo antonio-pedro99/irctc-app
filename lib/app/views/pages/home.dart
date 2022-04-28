@@ -187,10 +187,7 @@ class _HomePageState extends State<HomePage>
                     padding: const EdgeInsets.fromLTRB(12, 55, 0, 0),
                     child: ListView(
                       children: [
-                        Text(
-                            model.isLogged()
-                                ? "Hey, ${model.userData["name"]} Welcome back!"
-                                : "Hey, Welcome!",
+                        Text("Hey, ${model.userData["name"]} Welcome back!",
                             textAlign: TextAlign.start,
                             softWrap: true,
                             overflow: TextOverflow.visible,
@@ -220,13 +217,11 @@ class _HomePageState extends State<HomePage>
               sliver: SliverList(
                   delegate: SliverChildListDelegate([
                 const SizedBox(height: 10),
-                model.isLogged()
-                    ? const Text("Your recent Trip",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: grey,
-                            fontWeight: FontWeight.w600))
-                    : Container(),
+                const Text("Your recent Trip",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: grey,
+                        fontWeight: FontWeight.w600)),
                 const SizedBox(height: 5),
                 /* model.isLogged()
                     ? TicketTile(

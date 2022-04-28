@@ -7,3 +7,4 @@ const String paymentGatewayUrl = "$domain/pay/for_strip";
 const String userDetails = "$domain/users/";
 const String ticketIssue = "$domain/ticket/"; //with a body
 const String ticketCancel = "";
+

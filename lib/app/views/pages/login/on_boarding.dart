@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/app.dart';
 import 'package:irctc_dbms/app/constants.dart';
+import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/login/opt_1.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
@@ -11,8 +13,9 @@ class OnBoardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: swatch,
-        body: CustomScrollView(
+      backgroundColor: swatch,
+      body: ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+        return CustomScrollView(
           slivers: [
             const SliverAppBar(
               toolbarHeight: 0,
@@ -64,10 +67,17 @@ class OnBoardingPage extends StatelessWidget {
                           backgroundColor: MaterialStateProperty.resolveWith(
                               (states) => Colors.white)),
                       onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) {
-                          return const MyHome();
-                        }), (route) => false);
+                        if (!model.isLogged()) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) {
+                            return const OTP1();
+                          }), (route) => false);
+                        } else {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) {
+                            return const MyHome();
+                          }), (route) => false);
+                        }
                       },
                       child: const Text("Explore",
                           textAlign: TextAlign.start,
@@ -77,6 +87,8 @@ class OnBoardingPage extends StatelessWidget {
                               fontSize: 16)))
                 ])))
           ],
-        ));
+        );
+      }),
+    );
   }
 }

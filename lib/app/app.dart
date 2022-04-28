@@ -66,7 +66,6 @@ class _MyHomeState extends State<MyHome> {
   @override
   void dispose() {
     _pageController.dispose();
-
     super.dispose();
   }
 

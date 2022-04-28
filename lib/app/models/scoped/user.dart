@@ -1,20 +1,22 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/user.dart';
 import 'package:irctc_dbms/app/models/user_login.dart';
 import 'package:irctc_dbms/app/models/user_register.dart';
 import 'package:irctc_dbms/app/services/auth.dart';
+import 'package:http/http.dart' as http;
+import 'package:irctc_dbms/app/services/endpoints.dart';
 import 'package:irctc_dbms/app/services/user.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserModel extends Model {
   bool isLoading = false;
-  User? _currentUser;
-  static int? logged;
-
-  // Auth auth = Auth();
-  //Authentication authenticator = Authentication();
+  static String? logged;
 
   static UserModel of(BuildContext context) =>
       ScopedModel.of<UserModel>(context);
@@ -26,40 +28,24 @@ class UserModel extends Model {
   @override
   void addListener(listener) {
     super.addListener(listener);
-    loadUser();
-  }
-
-  loadUser() {
-    if (_currentUser != null) {
-      userData = _currentUser!.toJson();
-    }
-    notifyListeners();
-  }
-
-  Future<void> _load() async {
-    logged = await ControlLogin.currentUserID();
-    notifyListeners();
   }
 
   Future<bool> createUser(UserRegister userregister) async {
-    await Auth.registerWithEmailAndPassword(userregister);
+    await registerWithEmailAndPassword(userregister);
 
-    if (Auth.res["sucess"] == 1) {
-      return true;
-    }
     return false;
   }
 
-  bool makeLogin(String email, String password) {
+  Future<bool?> makeLogin(String email, String password) async {
     notifyListeners();
-    Auth.signWithEmailAndPassword(UserLogin(email: email, password: password));
+    AuthResponse res = await signWithEmailAndPassword(
+        UserLogin(email: email, password: password));
 
-    if (Auth.res["msg"] != 400) {
-      _load();
-      notifyListeners();
-      UserDataProvider.getUserDetails(ControlLogin.userID).then((value) {
-        _currentUser = value;
-        loadUser();
+    if (!res.hasError && res.hasData) {
+      UserDataProvider.getUserDetails((res.data as User).id!).then((value) {
+        userData = value.toJson();
+        notifyListeners();
+        saveLogin(res);
       });
       return true;
     }
@@ -68,19 +54,56 @@ class UserModel extends Model {
     return false;
   }
 
-  saveLogin() async {
+  saveLogin(AuthResponse auth) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("user_id", "${(auth.data as User).id!}");
     notifyListeners();
   }
 
-  makelogout() {
-    _currentUser = null;
-    logged = null;
-    ControlLogin.updateLogin("currentUserID", "0");
-    saveLogin();
+  makelogout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    logged = "";
+    prefs.setString("user_id", "");
     notifyListeners();
   }
 
   isLogged() {
-    return _currentUser != null;
+    return logged != "";
+  }
+
+  Future<AuthResponse> signWithEmailAndPassword(UserLogin login) async {
+    AuthResponse _response = AuthResponse();
+    await http
+        .post(Uri.parse(authLogin),
+            headers: {
+              HttpHeaders.acceptHeader: 'application/json',
+              HttpHeaders.contentTypeHeader: 'application/json',
+              HttpHeaders.varyHeader: "Accept",
+              HttpHeaders.allowHeader: "POST, OPTION"
+            },
+            body: json.encode(login.toJson()))
+        .then((value) {
+      if (value.statusCode == 200) {
+        _response.data = User.fromJson(jsonDecode(value.body));
+      } else {
+        _response.onError = jsonDecode(value.body);
+      }
+    });
+    return _response;
+  }
+
+  registerWithEmailAndPassword(UserRegister newUser) async {
+    await http
+        .post(Uri.parse(authRegister),
+            headers: {
+              HttpHeaders.acceptHeader: 'application/json',
+              HttpHeaders.contentTypeHeader: 'application/json',
+              HttpHeaders.varyHeader: "Accept",
+              HttpHeaders.allowHeader: "POST, OPTION"
+            },
+            body: json.encode(newUser.toJson()))
+        .then((value) {
+      //res = json.decode(value.body);
+    });
   }
 }

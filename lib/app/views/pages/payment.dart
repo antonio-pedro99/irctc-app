@@ -9,6 +9,7 @@ import 'package:irctc_dbms/app/models/trip.dart';
 import 'package:irctc_dbms/app/services/user.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
 import 'package:irctc_dbms/app/views/pages/login/login.dart';
+import 'package:irctc_dbms/app/views/pages/ticket/ticket_details.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -105,7 +106,7 @@ class _PaymentPageState extends State<PaymentPage>
                       child: TabBarView(
                         children: [
                           cardPaymentMethod(context),
-                          //Container(color: Colors.red),
+                         
                           Container(color: Colors.yellow),
                           Container(color: Colors.orange),
                         ],
@@ -136,10 +137,43 @@ class _PaymentPageState extends State<PaymentPage>
 
                             var selection = {
                               "trip_id": widget.trip!.tripId,
-                              "passenger_id": 500,
+                              "passenger_id": UserModel.logged,
                               "payment_id": paymentDetails["paymentID"]
                             };
-
+                            setState(() {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                        "Success",
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                      content: Container(
+                                        height: 75,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        alignment: Alignment.center,
+                                        child: const Text(
+                                            "Ticket has been booked successfully."),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const TicketDetailPage();
+                                            }));
+                                          },
+                                          child: const Text("See Details"),
+                                        )
+                                      ],
+                                    );
+                                  });
+                            });
                             await UserDataProvider.bookTicket(selection);
                           } else {
                             setState(() {
@@ -147,8 +181,16 @@ class _PaymentPageState extends State<PaymentPage>
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
+                                      title: const Text(
+                                        "Alert",
+                                        style: TextStyle(
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.normal),
+                                      ),
                                       content: Container(
                                         height: 100,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
                                         alignment: Alignment.center,
                                         child: const Text(
                                             "You are not logged in, login in first"),
@@ -208,7 +250,6 @@ class _PaymentPageState extends State<PaymentPage>
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  /* controller: from, */
                   validator: (str) {
                     if (str!.isEmpty) {
                       return "Please Enter a valid argument";
@@ -225,8 +266,6 @@ class _PaymentPageState extends State<PaymentPage>
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  /*   controller: departure,
-                  onTap: onDateClick, */
                   validator: (str) {
                     if (str!.isEmpty) {
                       return "Please Enter a valid argument";

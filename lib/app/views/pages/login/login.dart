@@ -6,6 +6,7 @@ import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/user_login.dart';
 import 'package:irctc_dbms/app/services/auth.dart';
+import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/login/register.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -114,14 +115,17 @@ class LoginPage extends StatelessWidget {
                                         MaterialStateProperty.resolveWith(
                                             (states) => primary)),
                                 onPressed: () async {
-                                  UserLogin login = UserLogin(
-                                      email: emailController.text,
-                                      password: passwordController.text);
-
                                   if (_formKey.currentState!.validate()) {
-                                    model.makeLogin(emailController.text,
+                                    bool? flag = await model.makeLogin(
+                                        emailController.text,
                                         passwordController.text);
-                                    Navigator.of(context).pop();
+                                    if (flag!) {
+                                      Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MyHome()),
+                                          (route) => false);
+                                    }
                                   }
                                 },
                                 child: const Text("Login",
@@ -157,4 +161,6 @@ class LoginPage extends StatelessWidget {
       }),
     );
   }
+
+  saveAndGoToHome() async {}
 }

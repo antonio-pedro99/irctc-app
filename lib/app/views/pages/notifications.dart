@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/notification.dart';
@@ -20,6 +21,11 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
+  String formatDate(String date) {
+    return DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
+        .format(DateTime.parse(date));
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<UserModel>(builder: (context, child, model) {
@@ -38,31 +44,57 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 statusBarBrightness: Brightness.light,
                 statusBarColor: primary30),
           ),
-          body: model.isLogged()
-              ? FutureBuilder<List<UserNotification>>(
-                  future:
-                      UserDataProvider.getUserNotifications(UserModel.logged!),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return const Center(
-                          child: Text(
-                              "Unabled to fetch data, check your internet"));
-                    }
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: ((context, index) {
-                          return ListTile(
-                            title: Text(snapshot.data![index].title!),
-                            subtitle: Text(snapshot.data![index].content!),
-                          );
-                        }));
-                  },
-                )
-              : Center(
+          body: FutureBuilder<List<UserNotification>>(
+            future: UserDataProvider.getUserNotifications(
+                int.parse(model.userData["id"])),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return const Center(
+                    child: Text("Unabled to fetch data, check your internet"));
+              }
+              return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: ((context, index) {
+                    return BoxRectangle(
+                      height: 78,
+                      body: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${snapshot.data![index].title}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.normal),
+                              ),
+                              Text(
+                                formatDate("${snapshot.data![index].date}"),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          RichText(
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                              textAlign: TextAlign.justify,
+                              text: TextSpan(
+                                  text: "${snapshot.data![index].content}"))
+                        ],
+                      ),
+                    );
+                  }));
+            },
+          )
+          /*  : Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,8 +114,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
                             }));
                           })
                     ],
-                  ),
-                ));
+                  ), */
+          );
     });
   }
 }

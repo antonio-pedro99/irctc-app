@@ -128,39 +128,42 @@ class SearchResultPage extends StatelessWidget {
                     ),
                   )),
               Expanded(
-                  child: Padding(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), child: FutureBuilder<List<Trip>>(
-                future: TripProvider.fetchTrips(
-                    model.currentQuery!.from!, model.currentQuery!.to!),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("${snapshot.error}"),
-                    );
-                  }
-                  return ListView.builder(
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: ((context, index) {
-                        return InkWell(
-                          child: TripTile(
-                            trip: snapshot.data![index],
-                          ),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return TripDetail(
-                                trip: snapshot.data![index],
-                                query: model.currentQuery,
-                              );
-                            }));
-                          },
-                        );
-                      }));
-                },
-              )))
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: FutureBuilder<List<Trip>>(
+                        future: TripProvider.fetchTrips(
+                            model.currentQuery!.from!, model.currentQuery!.to!),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text("${snapshot.error}"),
+                            );
+                          }
+                          return ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: ((context, index) {
+                                return InkWell(
+                                  child: TripTile(
+                                    trip: snapshot.data![index],
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return TripDetail(
+                                        trip: snapshot.data![index],
+                                        query: model.currentQuery,
+                                      );
+                                    }));
+                                  },
+                                );
+                              }));
+                        },
+                      )))
             ],
           ),
           floatingActionButton: FloatingActionButton(
