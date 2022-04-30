@@ -62,8 +62,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
                         itemCount: snapshot.data!.length,
                         itemBuilder: ((context, index) {
                           return BoxRectangle(
-                            height: 78,
+                            title: "",
                             body: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   mainAxisAlignment:
@@ -72,27 +74,34 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                   children: [
                                     Text(
                                       "${snapshot.data![index].title}",
+                                      softWrap: true,
+                                      overflow: TextOverflow.clip,
                                       style: const TextStyle(
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    Text(
-                                      formatDate(
-                                          "${snapshot.data![index].date}"),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w400),
+                                          fontSize: 17,
+                                          color: primary,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 5,
+                                  height: 2,
                                 ),
-                                RichText(
+                                Text(
+                                  formatDate("${snapshot.data![index].date}"),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text("${snapshot.data![index].content}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                    ))
+                                /*  Text(
                                     softWrap: true,
-                                    overflow: TextOverflow.fade,
+                                    //  overflow: TextOverflow.fade,
                                     textAlign: TextAlign.justify,
                                     text: TextSpan(
                                         text:
-                                            "${snapshot.data![index].content}"))
+                                            "${snapshot.data![index].content}")) */
                               ],
                             ),
                           );
