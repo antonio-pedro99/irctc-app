@@ -35,10 +35,4 @@ class Ticket {
     seat = json['seat'];
   }
 
-  /*  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['location_from'] = locationFrom;
-    
-    return data; }*/
-
 }

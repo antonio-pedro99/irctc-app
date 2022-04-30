@@ -28,9 +28,15 @@ class UserDataProvider {
 
   static Future<String> updateUserDetails(
       int currentUserId, Map<String, dynamic> userNewData) async {
-    final response = await http.put(
-        Uri.parse(userDetails + "$currentUserId/update"),
-        body: jsonEncode(userNewData));
+    final response =
+        await http.put(Uri.parse(userDetails + "$currentUserId/update"),
+            headers: {
+              HttpHeaders.acceptHeader: 'application/json',
+              HttpHeaders.contentTypeHeader: 'application/json',
+              HttpHeaders.varyHeader: "Accept",
+              HttpHeaders.allowHeader: "POST, OPTION"
+            },
+            body: jsonEncode(userNewData));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {

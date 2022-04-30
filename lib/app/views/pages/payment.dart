@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:irctc_dbms/app/app.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/ticket.dart';
@@ -9,6 +10,7 @@ import 'package:irctc_dbms/app/models/ticket.dart';
 import 'package:irctc_dbms/app/models/trip.dart';
 import 'package:irctc_dbms/app/services/user.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
+import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/login/login.dart';
 import 'package:irctc_dbms/app/views/pages/ticket/ticket_details.dart';
 import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
@@ -168,13 +170,14 @@ class _PaymentPageState extends State<PaymentPage>
                                       actions: [
                                         TextButton(
                                           onPressed: () async {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return TicketPage();
-                                            }));
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                        builder: (context) {
+                                              return const MyHome();
+                                            }), (route) => false);
                                           },
-                                          child: const Text("See Details"),
+                                          child: const Text("Ok"),
                                         )
                                       ],
                                     );
