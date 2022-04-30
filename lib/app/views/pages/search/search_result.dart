@@ -1,64 +1,25 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/query.dart';
 import 'package:irctc_dbms/app/models/trip.dart';
 import 'package:irctc_dbms/app/services/trip.dart';
+import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
 import 'package:irctc_dbms/app/views/elements/trip_tile.dart';
 import 'package:irctc_dbms/app/views/pages/search/filter_page.dart';
 import 'package:irctc_dbms/app/views/pages/search/trip_detail.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-bool filterApplied = false;
-
 class SearchResultPage extends StatelessWidget {
   const SearchResultPage({Key? key}) : super(key: key);
-  /*  final _trip = Trip(
-    from: "New Delhi",
-    fromCode: "DLX",
-    to: "Gugugram",
-    toCode: "GGM",
-    stationLocation: "Govind Puri Train Station",
-    departureTime: "00:30",
-    arrivalTime: "2:00 AM",
-    price: 200,
-    trainId: 234,
-    duration: "01h20m",
-    stops: [
-      /*  Trip(
-        from: "Mumbai",
-        fromCode: "MBI",
-        to: "Gugugram",
-        toCode: "GGM",
-        stationLocation: "Mumbai Train Station",
-        departureTime: "01:30",
-        arrivalTime: "2:00 AM",
-        price: 100,
-        trainId: 404,
-        duration: "00h30m",
-        stops: [],
-        passengers: [],
-        date: "Jan 15, 2022",
-      ), */
-      /*  Trip(
-        from: "Mumbai",
-        fromCode: "MBI",
-        to: "Gugugram",
-        toCode: "GGM",
-        stationLocation: "Mumbai Train Station",
-        departureTime: "01:30",
-        arrivalTime: "2:00 AM",
-        price: 100,
-        trainId: 404,
-        duration: "00h30m",
-        stops: [],
-        passengers: [],
-        date: "Jan 15, 2022",
-      ) */
-    ],
-    passengers: [],
-    date: "Jan 15, 2022",
-  ); */
+
+  String formatDate(String date) {
+    return DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
+        .format(DateTime.parse(date));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +82,7 @@ class SearchResultPage extends StatelessWidget {
                             height: 25,
                           ),
                           Text(
-                            "${model.currentQuery!.departure}, ${model.currentQuery!.totalPassengers} Travellers",
+                            "${model.currentQuery!.departure} ${model.currentQuery!.totalPassengers} Travellers",
                           ),
                         ],
                       ),
@@ -144,24 +105,47 @@ class SearchResultPage extends StatelessWidget {
                               child: Text("${snapshot.error}"),
                             );
                           }
-                          return ListView.builder(
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: ((context, index) {
-                                return InkWell(
-                                  child: TripTile(
-                                    trip: snapshot.data![index],
+                          //sort the result
+                          var result = snapshot.data!.where((element) {
+                            var res = formatDate(element.dtDeparture!)
+                                .allMatches(model.currentQuery!.departure!);
+                            return res.isNotEmpty;
+                          });
+
+                          if (result.isNotEmpty) {
+                            return ListView.builder(
+                                itemCount: result.length,
+                                itemBuilder: ((context, index) {
+                                  return InkWell(
+                                    child: TripTile(
+                                      trip: snapshot.data![index],
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return TripDetail(
+                                          trip: snapshot.data![index],
+                                          query: model.currentQuery!,
+                                        );
+                                      }));
+                                    },
+                                  );
+                                }));
+                          } else {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "No result found",
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
                                   ),
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return TripDetail(
-                                        trip: snapshot.data![index],
-                                        query: model.currentQuery!,
-                                      );
-                                    }));
-                                  },
-                                );
-                              }));
+                                ],
+                              ),
+                            );
+                          }
                         },
                       )))
             ],

@@ -113,17 +113,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                 )
                               ],
                             ),
-                            /*  Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                TrainCircle(
-                                  background: Colors.white,
-                                  iconColor: primary,
-                                  radius: 20,
-                                ),
-                              ],
-                            ) ,*/
+                           
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.end,

@@ -66,13 +66,12 @@ class UserModel extends Model {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     logged = "";
     userData = {};
-    print(await prefs.get("user_id"));
+
     prefs.setString("user_id", "");
     notifyListeners();
   }
 
   isLogged() {
-    print(logged);
     return logged!.isNotEmpty;
   }
 

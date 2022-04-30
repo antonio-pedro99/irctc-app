@@ -1,7 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -72,6 +70,7 @@ class _HomePageState extends State<HomePage>
 
   Widget customContainer(BuildContext context, Widget body, double height) {
     var media = MediaQuery.of(context).size;
+
     return Card(
       borderOnForeground: false,
       elevation: 0.1,
@@ -177,7 +176,6 @@ class _HomePageState extends State<HomePage>
             backgroundColor: primary,
             title: const Text("Search Trips",
                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20)),
-            floating: true,
             elevation: 0,
             centerTitle: true,
             expandedHeight: 175,
@@ -220,29 +218,8 @@ class _HomePageState extends State<HomePage>
               sliver: SliverList(
                   delegate: SliverChildListDelegate([
                 const SizedBox(height: 10),
-                const Text("Your recent Trip",
+                const Text("Your next trip detail",
                     style: TextStyle(
-                        fontSize: 14,
-                        color: grey,
-                        fontWeight: FontWeight.w600)),
-                const SizedBox(height: 5),
-                /* model.isLogged()
-                    ? TicketTile(
-                        ticket: Ticket(
-                            from: "NEW DELHI",
-                            to: "GOA",
-                            date: "Jan 15, 2022",
-                            departureTime: "10:45",
-                            aririvalTime: "03:00",
-                            trainId: 103,
-                            seat: 200,
-                            tripId: 1204,
-                            price: 100),
-                      )
-                    : Container(), */
-                const SizedBox(height: 5),
-                Text("${model.isLogged()}",
-                    style: const TextStyle(
                         fontSize: 14,
                         color: grey,
                         fontWeight: FontWeight.w600)),
@@ -297,6 +274,7 @@ class _HomePageState extends State<HomePage>
                                     if (keyOneRoute.currentState!.validate()) {
                                       QueryModel.of(context)
                                           .setQuery(searchQuery);
+
                                       Navigator.of(context).push(
                                           MaterialPageRoute(builder: (context) {
                                         return const SearchResultPage();
