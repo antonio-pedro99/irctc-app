@@ -18,11 +18,11 @@ import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyApp extends ConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return ScopedModel<UserModel>(
         model: UserModel(),
         child:
@@ -68,6 +68,8 @@ class _MyHomeState extends State<MyHome> {
     _pageController.dispose();
     super.dispose();
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {

@@ -44,7 +44,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10))),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3.8,
+                height: MediaQuery.of(context).size.height / 3.7,
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: DefaultTextStyle(
@@ -109,7 +109,7 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                   "Rs ${widget.ticket!.price}",
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 40),
+                                      fontSize: 35),
                                 )
                               ],
                             ),

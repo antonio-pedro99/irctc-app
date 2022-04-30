@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
+import 'package:irctc_dbms/app/models/ticket.dart';
 
 import 'package:irctc_dbms/app/models/trip.dart';
 import 'package:irctc_dbms/app/services/user.dart';
 import 'package:irctc_dbms/app/views/elements/box_rectangle.dart';
 import 'package:irctc_dbms/app/views/pages/login/login.dart';
 import 'package:irctc_dbms/app/views/pages/ticket/ticket_details.dart';
+import 'package:irctc_dbms/app/views/pages/ticket/tickets.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -106,7 +108,6 @@ class _PaymentPageState extends State<PaymentPage>
                       child: TabBarView(
                         children: [
                           cardPaymentMethod(context),
-                         
                           Container(color: Colors.yellow),
                           Container(color: Colors.orange),
                         ],
@@ -127,13 +128,18 @@ class _PaymentPageState extends State<PaymentPage>
                                 (states) => primary)),
                         onPressed: () async {
                           if (model.isLogged()) {
-                            var payment = {
+                            Map<String, dynamic> paym = {
+                              "payment_method": 2,
+                              "amount": 1500
+                            };
+
+                            Map<String, dynamic> payment = {
                               "payment_method": tabController.index + 1,
                               "amount": widget.trip!.price,
-                              "date": DateTime.now().toString()
                             };
+
                             var paymentDetails =
-                                await FakeRazorPayApi.paymentGateway(payment);
+                                await FakeRazorPayApi.paymentGateway(paym);
 
                             var selection = {
                               "trip_id": widget.trip!.tripId,
@@ -161,11 +167,11 @@ class _PaymentPageState extends State<PaymentPage>
                                       ),
                                       actions: [
                                         TextButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             Navigator.push(context,
                                                 MaterialPageRoute(
                                                     builder: (context) {
-                                              return const TicketDetailPage();
+                                              return TicketPage();
                                             }));
                                           },
                                           child: const Text("See Details"),
@@ -227,6 +233,7 @@ class _PaymentPageState extends State<PaymentPage>
   Widget cardPaymentMethod(BuildContext context) {
     var _key = GlobalKey<FormState>();
     return BoxRectangle(
+        title: "",
         height: MediaQuery.of(context).size.height / 5,
         body: Form(
             key: _key,

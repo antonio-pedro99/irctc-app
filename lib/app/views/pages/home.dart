@@ -187,7 +187,10 @@ class _HomePageState extends State<HomePage>
                     padding: const EdgeInsets.fromLTRB(12, 55, 0, 0),
                     child: ListView(
                       children: [
-                        Text("Hey, ${model.userData["name"]} Welcome back!",
+                        Text(
+                            model.isLogged()
+                                ? "Hey,  ${UserModel.userData["name"]} Welcome back!"
+                                : "Hey, Welcome back!",
                             textAlign: TextAlign.start,
                             softWrap: true,
                             overflow: TextOverflow.visible,
@@ -238,8 +241,8 @@ class _HomePageState extends State<HomePage>
                       )
                     : Container(), */
                 const SizedBox(height: 5),
-                const Text("Your next trip details",
-                    style: TextStyle(
+                Text("${model.isLogged()}",
+                    style: const TextStyle(
                         fontSize: 14,
                         color: grey,
                         fontWeight: FontWeight.w600)),

@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:irctc_dbms/app/controllers/login_control.dart';
 import 'package:irctc_dbms/app/models/user.dart';
 import 'package:irctc_dbms/app/models/user_login.dart';
 import 'package:irctc_dbms/app/models/user_register.dart';
@@ -21,9 +19,9 @@ class UserModel extends Model {
   static UserModel of(BuildContext context) =>
       ScopedModel.of<UserModel>(context);
 
-  Map<String, dynamic> userData = <String, dynamic>{};
+  static Map<String, dynamic> userData = <String, dynamic>{};
 
-  Map<String, dynamic> log = <String, dynamic>{};
+  User? current_user;
 
   @override
   void addListener(listener) {
@@ -43,7 +41,10 @@ class UserModel extends Model {
 
     if (!res.hasError && res.hasData) {
       UserDataProvider.getUserDetails((res.data as User).id!).then((value) {
+        userData["id"] = (res.data as User).id;
+
         userData = value.toJson();
+
         notifyListeners();
         saveLogin(res);
       });
@@ -57,18 +58,22 @@ class UserModel extends Model {
   saveLogin(AuthResponse auth) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("user_id", "${(auth.data as User).id!}");
+    logged = prefs.get("user_id") as String;
     notifyListeners();
   }
 
   makelogout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     logged = "";
+    userData = {};
+    print(await prefs.get("user_id"));
     prefs.setString("user_id", "");
     notifyListeners();
   }
 
   isLogged() {
-    return logged != "";
+    print(logged);
+    return logged!.isNotEmpty;
   }
 
   Future<AuthResponse> signWithEmailAndPassword(UserLogin login) async {
@@ -93,6 +98,7 @@ class UserModel extends Model {
   }
 
   registerWithEmailAndPassword(UserRegister newUser) async {
+    AuthResponse _response = AuthResponse();
     await http
         .post(Uri.parse(authRegister),
             headers: {
@@ -103,7 +109,11 @@ class UserModel extends Model {
             },
             body: json.encode(newUser.toJson()))
         .then((value) {
-      //res = json.decode(value.body);
+      if (value.statusCode == 200) {
+        _response.data = jsonDecode(value.body);
+      } else {
+        _response.onError = jsonDecode(value.body);
+      }
     });
   }
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ControlLogin extends ChangeNotifier {
+/* class ControlLogin extends ChangeNotifier {
   static FlutterSecureStorage storage = const FlutterSecureStorage();
 
   ControlLogin();
@@ -21,3 +20,4 @@ class ControlLogin extends ChangeNotifier {
     return preferences.get("user_id");
   }
 }
+ */

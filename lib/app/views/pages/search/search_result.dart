@@ -156,7 +156,7 @@ class SearchResultPage extends StatelessWidget {
                                         MaterialPageRoute(builder: (context) {
                                       return TripDetail(
                                         trip: snapshot.data![index],
-                                        query: model.currentQuery,
+                                        query: model.currentQuery!,
                                       );
                                     }));
                                   },

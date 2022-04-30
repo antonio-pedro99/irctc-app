@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:irctc_dbms/app/models/notification.dart';
@@ -69,6 +70,12 @@ class UserDataProvider {
   static Future<Map<String, dynamic>> bookTicket(
       Map<String, dynamic> selection) async {
     final response = await http.post(Uri.parse(ticketIssue + "issue"),
+        headers: {
+          HttpHeaders.acceptHeader: 'application/json',
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.varyHeader: "Accept",
+          HttpHeaders.allowHeader: "POST, OPTION"
+        },
         body: jsonEncode(selection));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -82,6 +89,12 @@ class FakeRazorPayApi {
   static Future<Map<String, dynamic>> paymentGateway(
       Map<String, dynamic> payment) async {
     final response = await http.post(Uri.parse(paymentGatewayUrl),
+        headers: {
+          HttpHeaders.acceptHeader: 'application/json',
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.varyHeader: "Accept",
+          HttpHeaders.allowHeader: "POST, OPTION"
+        },
         body: jsonEncode(payment));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);

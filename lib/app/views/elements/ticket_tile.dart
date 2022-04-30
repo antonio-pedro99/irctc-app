@@ -32,7 +32,7 @@ class TicketTile extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(13)),
         child: DefaultTextStyle(
-            style: const TextStyle(color: grey, fontWeight: FontWeight.w100),
+            style: const TextStyle(color: grey, fontWeight: FontWeight.w200),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

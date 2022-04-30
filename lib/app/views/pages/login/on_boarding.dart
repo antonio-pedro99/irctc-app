@@ -3,12 +3,37 @@ import 'package:flutter/services.dart';
 import 'package:irctc_dbms/app/app.dart';
 import 'package:irctc_dbms/app/constants.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
+import 'package:irctc_dbms/app/services/user.dart';
 import 'package:irctc_dbms/app/views/pages/home.dart';
 import 'package:irctc_dbms/app/views/pages/login/opt_1.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class OnBoardingPage extends StatelessWidget {
+class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({Key? key}) : super(key: key);
+
+  @override
+  State<OnBoardingPage> createState() => _OnBoardingPageState();
+}
+
+class _OnBoardingPageState extends State<OnBoardingPage> {
+  @override
+  void initState() {
+    loadPreviousLogin();
+    super.initState();
+  }
+
+  loadPreviousLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? id = prefs.getString("user_id");
+
+    if (id!.isNotEmpty) {
+      UserDataProvider.getUserDetails(int.parse(id)).then((value) {
+        UserModel.userData = value.toJson();
+      });
+    }
+    UserModel.logged = prefs.getString("user_id");
+  }
 
   @override
   Widget build(BuildContext context) {
