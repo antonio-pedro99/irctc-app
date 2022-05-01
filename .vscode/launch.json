@@ -22,7 +22,10 @@
             "name": "irctc_dbms (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "--no-sound-null-safety"
+            ]
         }
     ]
 }
