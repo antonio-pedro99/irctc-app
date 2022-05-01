@@ -21,8 +21,6 @@ class UserModel extends Model {
 
   static Map<String, dynamic> userData = <String, dynamic>{};
 
-  User? current_user;
-
   @override
   void addListener(listener) {
     super.addListener(listener);
@@ -40,19 +38,45 @@ class UserModel extends Model {
         UserLogin(email: email, password: password));
 
     if (!res.hasError && res.hasData) {
-      UserDataProvider.getUserDetails((res.data as User).id!).then((value) {
-        userData["id"] = (res.data as User).id;
+      loadUserData((res.data as User).id!);
+      saveLogin(res);
 
-        userData = value.toJson();
-
-        notifyListeners();
-        saveLogin(res);
-      });
       return true;
     }
 
     notifyListeners();
     return false;
+  }
+
+  loadUserData(int id) {
+    UserDataProvider.getUserDetails(id).then((value) {
+      userData = value.toJson();
+      notifyListeners();
+    });
+  }
+
+  updateAge(int age) {
+    UserDataProvider.updateUserDetails(int.parse(logged!), {"age": age});
+    loadUserData(int.parse(logged!));
+    notifyListeners();
+  }
+
+  updateName(String name) {
+    UserDataProvider.updateUserDetails(int.parse(logged!), {"name": name});
+    loadUserData(int.parse(logged!));
+    notifyListeners();
+  }
+
+  updateEmail(String email) {
+    UserDataProvider.updateUserDetails(int.parse(logged!), {"email": email});
+    loadUserData(int.parse(logged!));
+    notifyListeners();
+  }
+
+  updatePhone(String phone) {
+    UserDataProvider.updateUserDetails(int.parse(logged!), {"phone": phone});
+    loadUserData(int.parse(logged!));
+    notifyListeners();
   }
 
   saveLogin(AuthResponse auth) async {

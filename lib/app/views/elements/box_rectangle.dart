@@ -27,7 +27,7 @@ class BoxRectangle extends StatelessWidget {
             style: const TextStyle(color: grey, fontWeight: FontWeight.w100),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 title == null
                     ? Text(
