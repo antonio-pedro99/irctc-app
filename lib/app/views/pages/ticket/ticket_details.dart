@@ -44,9 +44,9 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10))),
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3.7,
                 child: Padding(
-                  padding: const EdgeInsets.all(12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: DefaultTextStyle(
                     style: const TextStyle(color: Colors.white),
                     child: Column(
@@ -68,11 +68,6 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                 },
                               ),
                               const SizedBox(width: 100),
-                              /*  const Text("Tickets",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 20,
-                                  )) */
                             ],
                           ),
                         ),
@@ -113,7 +108,6 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                 )
                               ],
                             ),
-                           
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -131,9 +125,6 @@ class _TicketDetailPageState extends State<TicketDetailPage> {
                                   height: 5,
                                 ),
                                 Text(formatTime(widget.ticket!.arrival!)),
-                                const SizedBox(
-                                  height: 70,
-                                ),
                               ],
                             )
                           ],
