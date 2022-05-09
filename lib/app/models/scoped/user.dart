@@ -100,7 +100,7 @@ class UserModel extends Model {
   }
 
   isLogged() {
-    return logged!.isNotEmpty;
+    return logged != null && logged!.isNotEmpty;
   }
 
   Future<AuthResponse> signWithEmailAndPassword(UserLogin login) async {

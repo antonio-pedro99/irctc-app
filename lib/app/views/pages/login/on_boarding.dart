@@ -27,10 +27,12 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? id = prefs.getString("user_id");
 
-    if (id!.isNotEmpty) {
+    if (id != null) {
       UserDataProvider.getUserDetails(int.parse(id)).then((value) {
         UserModel.userData = value.toJson();
       });
+    } else {
+      prefs.setString("user_id", "");
     }
     UserModel.logged = prefs.getString("user_id");
   }
