@@ -125,6 +125,15 @@ class LoginPage extends StatelessWidget {
                                               builder: (context) =>
                                                   const MyHome()),
                                           (route) => false);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 2),
+                                        child: const Text(
+                                            "Ups can't login verify your details"),
+                                      )));
                                     }
                                   }
                                 },
