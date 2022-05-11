@@ -22,7 +22,6 @@ This system is reserved only for booking tickets, informations about the managem
 
 ![image](https://user-images.githubusercontent.com/42675180/167798658-f41ab1f9-9501-4922-8a08-f15c108c5dbe.png)
 
-
 ## Screenshots
 
 
