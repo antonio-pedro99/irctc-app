@@ -6,7 +6,7 @@ It is a simulation of the IRCTC system, a system to control and maintain informa
 # Overview
 
 <p float="left">
-  <img src="  https://raw.githubusercontent.com/antonio-pedro99/irctc-app/master/screenshots/5.png" width="200" />
+  <img src="https://raw.githubusercontent.com/antonio-pedro99/irctc-app/master/screenshots/5.png" width="200" />
   <img src="https://raw.githubusercontent.com/antonio-pedro99/irctc-app/master/screenshots/6.png" width="200" />
   <img src="https://raw.githubusercontent.com/antonio-pedro99/irctc-app/master/screenshots/7.png" width="200" />
   <img src="https://raw.githubusercontent.com/martinoyovo/flutter-airline-app/main/screenshots/tickets.png" width="200" />
