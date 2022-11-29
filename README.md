@@ -40,8 +40,8 @@ This system is reserved only for booking tickets, informations about the managem
 
 ## Backend
 
-The backend of this app is also in separate github repository, but not available for public.
-The Database technology being used is MySQL 8. We used python FastAPI to build the backend(APIs)
+You can find the Backend here [Backend](https://github.com/antonio-pedro99/irctc-backend)
+We used MySQL 8 as our DB. We used python FastAPI to build the backend(APIs)
 For read more about FastAPI head over: https://fastapi.tiangolo.com/
 
 
