@@ -81,14 +81,14 @@ class _TripDetailState extends State<TripDetail> {
                             Column(
                               children: [
                                 Text(
-                                  "Selecting Trip to\n${widget.query!.to}",
+                                  "Selecting Trip to\n${widget.trip!.destinationTo}",
                                   style: const TextStyle(fontSize: 24),
                                 ),
                                 const SizedBox(
                                   height: 25,
                                 ),
                                 Text(
-                                  "${widget.query!.departure}, ${widget.query!.totalPassengers} Travellers",
+                                  "${widget.trip!.dtDeparture}",
                                 )
                               ],
                             ),

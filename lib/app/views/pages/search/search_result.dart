@@ -12,14 +12,14 @@ import 'package:irctc_dbms/app/views/elements/trip_tile.dart';
 import 'package:irctc_dbms/app/views/pages/search/filter_page.dart';
 import 'package:irctc_dbms/app/views/pages/search/trip_detail.dart';
 import 'package:scoped_model/scoped_model.dart';
+String formatDate(String date) {
+    return DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
+        .format(DateTime.parse(date));
+  }
 
 class SearchResultPage extends StatelessWidget {
   const SearchResultPage({Key? key}) : super(key: key);
 
-  String formatDate(String date) {
-    return DateFormat(DateFormat.YEAR_ABBR_MONTH_WEEKDAY_DAY)
-        .format(DateTime.parse(date));
-  }
 
   @override
   Widget build(BuildContext context) {
