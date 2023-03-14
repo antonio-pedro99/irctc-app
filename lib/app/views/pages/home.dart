@@ -249,6 +249,7 @@ class _HomePageState extends State<HomePage>
                               tabs: tabs),
                           Expanded(
                               child: TabBarView(
+                            controller: tabController,
                             children: [
                               oneRouteTrip(
                                   keyOneRoute,
@@ -326,7 +327,6 @@ class _HomePageState extends State<HomePage>
                                     selectTravellers(context);
                                   })
                             ],
-                            controller: tabController,
                           ))
                         ],
                       ),

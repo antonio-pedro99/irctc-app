@@ -10,7 +10,7 @@ class TripProvider {
     List<Trip> trips_dumb = [];
 
     final response =
-        await http.get(Uri.parse(trips + "/$location/to/$destination"));
+        await http.get(Uri.parse("$trips/$location/to/$destination"));
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.body);
