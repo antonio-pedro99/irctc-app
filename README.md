@@ -39,11 +39,13 @@ This system is reserved only for booking tickets, informations about the managem
 ![image](https://user-images.githubusercontent.com/42675180/167798658-f41ab1f9-9501-4922-8a08-f15c108c5dbe.png)
 
 ## Backend
-
+You will need an alive instance of our backend before running the APP.
 You can find the Backend here [Backend](https://github.com/antonio-pedro99/irctc-backend)
-We used MySQL 8 as our DB. We used python FastAPI to build the backend(APIs)
-For read more about FastAPI head over: https://fastapi.tiangolo.com/
+Follow up all the steps needed to run the backend locally on your machine then come back to here.
 
+## Running the APP
+
+If you are willing to run the app on an emulator, then you should change the base
 
 ### Credits:
 Antonio Pedro, Anirudh Iyer, Kennedy Sibin, Shubham Saini.
