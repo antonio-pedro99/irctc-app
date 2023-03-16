@@ -170,6 +170,4 @@ class LoginPage extends StatelessWidget {
       }),
     );
   }
-
-  saveAndGoToHome() async {}
 }

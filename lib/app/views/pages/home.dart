@@ -8,9 +8,13 @@ import 'package:irctc_dbms/app/controllers/traveller_selecter_controller.dart';
 import 'package:irctc_dbms/app/models/scoped/query.dart';
 import 'package:irctc_dbms/app/models/scoped/user.dart';
 import 'package:irctc_dbms/app/models/search_query.dart';
+import 'package:irctc_dbms/app/models/trip.dart';
+import 'package:irctc_dbms/app/services/trip.dart';
 import 'package:irctc_dbms/app/views/elements/rounded_button.dart';
 import 'package:irctc_dbms/app/views/elements/selecter.dart';
+import 'package:irctc_dbms/app/views/elements/trip_tile.dart';
 import 'package:irctc_dbms/app/views/pages/search/search_result.dart';
+import 'package:irctc_dbms/app/views/pages/search/trip_detail.dart';
 import 'package:provider/provider.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
@@ -132,12 +136,8 @@ class _HomePageState extends State<HomePage>
                 TextButton(
                     onPressed: () {
                       setState(() {
-                        travellersController.text = adultController.text +
-                            " adults, " +
-                            childrenController.text +
-                            " children, " +
-                            minorController.text +
-                            " minors.";
+                        travellersController.text =
+                            "${adultController.text} adults, ${childrenController.text} children, ${minorController.text} minors.";
                         Navigator.of(context).pop();
                       });
                     },
@@ -249,6 +249,7 @@ class _HomePageState extends State<HomePage>
                               tabs: tabs),
                           Expanded(
                               child: TabBarView(
+                            controller: tabController,
                             children: [
                               oneRouteTrip(
                                   keyOneRoute,
@@ -326,12 +327,69 @@ class _HomePageState extends State<HomePage>
                                     selectTravellers(context);
                                   })
                             ],
-                            controller: tabController,
                           ))
                         ],
                       ),
                     ),
-                    MediaQuery.of(context).size.height / 1.6)
+                    MediaQuery.of(context).size.height / 1.8),
+                const SizedBox(height: 24),
+                const Text("Trips from your current location"),
+                const SizedBox(height: 5),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .5,
+                  child: Expanded(
+                      child: FutureBuilder<List<Trip>>(
+                    future:
+                        TripProvider.fetchTripsFromCurrentLocation("Gurgaon"),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text("${snapshot.error}"),
+                        );
+                      }
+                      //sort the result
+                      var result = snapshot.data!;
+
+                      if (result.isNotEmpty) {
+                        return ListView.builder(
+                            itemCount: result.length,
+                            itemBuilder: ((context, index) {
+                              return InkWell(
+                                child: TripTile(
+                                  trip: snapshot.data![index],
+                                ),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return TripDetail(
+                                      trip: snapshot.data![index],
+                                      //query: model.currentQuery!,
+                                    );
+                                  }));
+                                },
+                              );
+                            }));
+                      } else {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "No result found",
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  )),
+                )
               ])))
         ],
       ));

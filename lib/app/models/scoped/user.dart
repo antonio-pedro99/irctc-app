@@ -27,8 +27,12 @@ class UserModel extends Model {
   }
 
   Future<bool> createUser(UserRegister userregister) async {
-    await registerWithEmailAndPassword(userregister);
+    AuthResponse res = await registerWithEmailAndPassword(userregister);
 
+    if (!res.hasError && res.hasData) {
+      return true;
+    }
+    notifyListeners();
     return false;
   }
 
@@ -96,7 +100,7 @@ class UserModel extends Model {
   }
 
   isLogged() {
-    return logged!.isNotEmpty;
+    return logged != null && logged!.isNotEmpty;
   }
 
   Future<AuthResponse> signWithEmailAndPassword(UserLogin login) async {
@@ -138,5 +142,6 @@ class UserModel extends Model {
         _response.onError = jsonDecode(value.body);
       }
     });
+    return _response;
   }
 }

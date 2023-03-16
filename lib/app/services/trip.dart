@@ -10,7 +10,25 @@ class TripProvider {
     List<Trip> trips_dumb = [];
 
     final response =
-        await http.get(Uri.parse(trips + "/$location/to/$destination"));
+        await http.get(Uri.parse("$trips/$location/to/$destination"));
+
+    if (response.statusCode == 200) {
+      var jsonList = jsonDecode(response.body);
+      for (var note in jsonList) {
+        trips_dumb.add(Trip.fromJson(note));
+      }
+      return trips_dumb;
+    } else {
+      throw Exception("Failed to fetch trips");
+    }
+  }
+
+    static Future<List<Trip>> fetchTripsFromCurrentLocation(
+      String location) async {
+    List<Trip> trips_dumb = [];
+
+    final response =
+        await http.get(Uri.parse("$trips/all_from_current_location/$location"));
 
     if (response.statusCode == 200) {
       var jsonList = jsonDecode(response.body);
